@@ -25,6 +25,10 @@
 
     console.log(queryURL);
 
+    window.location.href = ".html"
+
+    //on click navigates to new page with results for the given search
+
     $.ajax({
         url: queryURL,
         method: "GET"
