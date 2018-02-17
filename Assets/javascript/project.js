@@ -43,13 +43,21 @@ $("#submit-info").on("click", function (event) {
       method: 'GET',
     }).then(function (response) {
       var searchResults = response.schoolList
-      console.log("search: " + searchResults);
 
       for (var i = 0; i < searchResults.length; i++) {
         var searchResultsDiv = $("<div class='item'>");
         var schoolName = searchResults[i].schoolName;
+        var address = searchResults[i].address.street;
+        var level = searchResults[i].rankHistory[0].rankLevel;
+        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
         var h1 = $("<p>").text(schoolName);
-        searchResultsDiv.prepend(h1)
+        var h2 = $("<p>").text(address);
+        var h3 = $("<p>").text(level);
+        var h4 = $("<p>").text(stateRank);
+        searchResultsDiv.prepend(h1);
+        searchResultsDiv.append(h2);
+        searchResultsDiv.append(h3);
+        searchResultsDiv.append(h4);
         $("#results-go-here").prepend(searchResultsDiv);
       }
     });
