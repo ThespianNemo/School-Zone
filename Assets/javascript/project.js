@@ -17,6 +17,9 @@ $("#submit-info").on("click", function (event) {
 
   event.preventDefault();
 
+  //shows the class which defaul is hidden on load
+  $(".second-row").show();
+
   //grabs zip code user entered
   var userZip = $("#postal-code").val().trim();
   console.log("zip code: " + userZip);
