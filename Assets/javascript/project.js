@@ -59,6 +59,7 @@ $("#submit-info").on("click", function (event) {
         searchResultsDiv.append(h3);
         searchResultsDiv.append(h4);
         $("#results-go-here").prepend(searchResultsDiv);
+        
       }
     });
   });
