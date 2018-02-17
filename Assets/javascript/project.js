@@ -35,24 +35,25 @@ $("#submit-info").on("click", function (event) {
 
     var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
     console.log("schooldigger: " + queryURL);
-  })
 
-//ajax function to get search results for the given zip code 
-  // $.ajax({
-  //   url: queryURL,
-  //   method: 'GET',
-  // }).then(function (response) {
-  //   var searchResults = response.response.docs
-  //   console.log("search: " + searchResults);
 
-  //   for (var i = 0; i < result.length; i++) {
-  //     var resultsDiv = $("<div class='item'>");
-  //     var headLine = result[i].headline.main;
-  //     var h1 = $("<p>").text(headLine);
-  //     resultsDiv.prepend(h1)
-  //     $("#results-here").prepend(resultsDiv);
-  //   }
+    // ajax function to get search results for the given zip code 
+    $.ajax({
+      url: queryURL,
+      method: 'GET',
+    }).then(function (response) {
+      var searchResults = response.schoolList
+      console.log("search: " + searchResults);
 
+      for (var i = 0; i < searchResults.length; i++) {
+        var searchResultsDiv = $("<div class='item'>");
+        var schoolName = searchResults[i].schoolName;
+        var h1 = $("<p>").text(schoolName);
+        searchResultsDiv.prepend(h1)
+        $("#results-go-here").prepend(searchResultsDiv);
+      }
+    });
   });
+});
 
 
