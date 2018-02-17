@@ -1,6 +1,5 @@
 # ** School-Zone **
 ## Colaborator's Section
-**collaborator**
 
 * Preston Cropp
 * Ryan Walker
@@ -14,11 +13,11 @@ By entering a zip code, choosing parameters such as public, private, charter, et
 
 When a specific school is clicked, the following info will be displayed:
 
-photo of the school
-address
-grade range
-school district
-phone #
-website (if available)
-test scores
-rating
+* photo of the school
+* address
+* grade range
+* school district
+* phone #
+* website (if available)
+* test scores
+* rating
