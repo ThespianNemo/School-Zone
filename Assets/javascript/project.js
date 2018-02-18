@@ -59,8 +59,13 @@ $("#submit-info").on("click", function (event) {
         
         var level = searchResults[i].schoolLevel;
 
-        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
-       
+        //if (!searchResults[i].rankHistory[0]){
+          var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;  
+        //} 
+        // else {
+        //   stateRank = "n/a";
+        // }
+ 
         // Add school's data into the table
       $("#results-go-here > tbody").append("<tr><td>" + schoolName + "</td><td>" + address + "</td><td>" +
       level + "</td><td>" + stateRank + "%" + "</td></tr>");

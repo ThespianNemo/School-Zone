@@ -9,3 +9,6 @@
 .third-row {
     display: none;
 }
+.container-main {
+    background-image: url("../images/park.jpeg");
+}
