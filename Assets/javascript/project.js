@@ -29,7 +29,7 @@ $("#submit-info").on("click", function (event) {
   // location.href = "results.html";
 
   //use geo code api to get state from zip code
-  var getStateUrl = "http://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&sensor=true";
+  var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
 
   //ajax function to get corresponding state
   $.ajax({
