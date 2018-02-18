@@ -37,8 +37,8 @@ $("#submit-info").on("click", function (event) {
     console.log("state: " + stateResult);
 
     var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
-    console.log("schooldigger: " + queryURL);
 
+    console.log("schooldigger: " + queryURL);
 
     // ajax function to get search results for the given zip code 
     $.ajax({
@@ -46,14 +46,15 @@ $("#submit-info").on("click", function (event) {
       method: 'GET',
     }).then(function (response) {
       var searchResults = response.schoolList
+      console.log(searchResults);
 
       for (var i = 0; i < searchResults.length; i++) {
-        var searchResultsDiv = $("<div class='item'>");
+        //var searchResultsDiv = $("<div class='item'>");
         var schoolName = searchResults[i].schoolName;
         var address = searchResults[i].address.street;
         var level = searchResults[i].rankHistory[0].rankLevel;
         var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
-        var h1 = $("<p>").text(schoolName);
+        /*var h1 = $("<p>").text(schoolName);
         var h2 = $("<p>").text(address);
         var h3 = $("<p>").text(level);
         var h4 = $("<p>").text(stateRank);
@@ -61,11 +62,16 @@ $("#submit-info").on("click", function (event) {
         searchResultsDiv.append(h2);
         searchResultsDiv.append(h3);
         searchResultsDiv.append(h4);
-        $("#results-go-here").prepend(searchResultsDiv);
+        $("#results-go-here").prepend(searchResultsDiv);*/
         
-      }
-    });
+        // Add employee's data into the table
+      $("#results-go-here > tbody").append("<tr><td>" + schoolName + "</td><td>" + address + "</td><td>" +
+      level + "</td><td>" + stateRank + "%" + "</td></tr>");
+    };
+  });
   });
 });
+
+
 
 
