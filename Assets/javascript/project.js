@@ -47,24 +47,18 @@ $("#submit-info").on("click", function (event) {
     }).then(function (response) {
       var searchResults = response.schoolList
       console.log(searchResults);
-
+      
       for (var i = 0; i < searchResults.length; i++) {
-        //var searchResultsDiv = $("<div class='item'>");
-        var schoolName = searchResults[i].schoolName;
-        var address = searchResults[i].address.street;
-        var level = searchResults[i].rankHistory[0].rankLevel;
-        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
-        /*var h1 = $("<p>").text(schoolName);
-        var h2 = $("<p>").text(address);
-        var h3 = $("<p>").text(level);
-        var h4 = $("<p>").text(stateRank);
-        searchResultsDiv.prepend(h1);
-        searchResultsDiv.append(h2);
-        searchResultsDiv.append(h3);
-        searchResultsDiv.append(h4);
-        $("#results-go-here").prepend(searchResultsDiv);*/
         
-        // Add employee's data into the table
+        var schoolName = searchResults[i].schoolName;
+        
+        var address = searchResults[i].address.street;
+        
+        var level = searchResults[i].schoolLevel;
+
+        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+       
+        // Add school's data into the table
       $("#results-go-here > tbody").append("<tr><td>" + schoolName + "</td><td>" + address + "</td><td>" +
       level + "</td><td>" + stateRank + "%" + "</td></tr>");
     };
