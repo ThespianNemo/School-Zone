@@ -17,8 +17,11 @@ $("#submit-info").on("click", function (event) {
 
   event.preventDefault();
 
-  //shows the class which defaul is hidden on load
+  //shows the class which default is hidden on load
   $(".second-row").show();
+  $(".third-row").show();
+  //removes search box upon results loading
+  $(".first-row").hide();
 
   //grabs zip code user entered
   var userZip = $("#postal-code").val().trim();
@@ -49,29 +52,22 @@ $("#submit-info").on("click", function (event) {
       console.log(searchResults);
 
       for (var i = 0; i < searchResults.length; i++) {
-        //var searchResultsDiv = $("<div class='item'>");
         var schoolName = searchResults[i].schoolName;
         var address = searchResults[i].address.street;
         var level = searchResults[i].rankHistory[0].rankLevel;
         var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
-        /*var h1 = $("<p>").text(schoolName);
-        var h2 = $("<p>").text(address);
-        var h3 = $("<p>").text(level);
-        var h4 = $("<p>").text(stateRank);
-        searchResultsDiv.prepend(h1);
-        searchResultsDiv.append(h2);
-        searchResultsDiv.append(h3);
-        searchResultsDiv.append(h4);
-        $("#results-go-here").prepend(searchResultsDiv);*/
-        
-        // Add employee's data into the table
-      $("#results-go-here > tbody").append("<tr><td>" + schoolName + "</td><td>" + address + "</td><td>" +
-      level + "</td><td>" + stateRank + "%" + "</td></tr>");
-    };
-  });
+
+        // Add search result data into the table
+        $("#results-go-here > tbody").append("<tr><td>" + schoolName + "</td><td>" + address + "</td><td>" +
+          level + "</td><td>" + stateRank + "%" + "</td></tr><tr>" );
+      };
+    });
   });
 });
 
-
+//event handler to reload page for user to start search over
+$("#restart-search").on("click", function (event) {
+  location.reload();
+});
 
 
