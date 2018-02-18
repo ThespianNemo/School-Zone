@@ -1,3 +1,18 @@
+.jumbotron {
+    background-color: #4682B4;
+    color: GhostWhite;
+}
+
+.panel-body {
+    background-color: #4682B4;
+    color: black;
+}
+
+.panel-default>.panel-heading {
+    background-color: #4682B4;
+    color: GhostWhite;
+}
+
 .nav-tabs {
     text-align: center;
 }
@@ -9,6 +24,19 @@
 .third-row {
     display: none;
 }
-.container-main {
+.container {
     background-image: url("../images/park.jpeg");
+    background-repeat: no-repeat;
+    background-color: #4682B4;
+    background-size: cover;
+    
+}
+
+#postal-code {
+    color: black;
+}
+
+#school-header {
+    color: GhostWhite;
+    font-weight: bold;
 }
