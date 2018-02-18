@@ -17,8 +17,11 @@ $("#submit-info").on("click", function (event) {
 
   event.preventDefault();
 
-  //shows the class which defaul is hidden on load
+  //shows the class which default is hidden on load
   $(".second-row").show();
+  $(".third-row").show();
+  //removes search box upon results loading
+  $(".first-row").hide();
 
   //grabs zip code user entered
   var userZip = $("#postal-code").val().trim();
@@ -66,6 +69,9 @@ $("#submit-info").on("click", function (event) {
   });
 });
 
-
+//event handler to reload page for user to start search over
+$("#restart-search").on("click", function (event) {
+  location.reload();
+});
 
 

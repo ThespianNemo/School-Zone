@@ -1,11 +1,11 @@
-.body {
-    background-image: url("Assets/images/park.jpeg");
-}
-
 .nav-tabs {
     text-align: center;
 }
 
 .second-row {
+    display: none;
+}
+
+.third-row {
     display: none;
 }
