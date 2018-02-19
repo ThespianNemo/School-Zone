@@ -74,4 +74,10 @@ $("#restart-search").on("click", function (event) {
   location.reload();
 });
 
+//enter/return key to trigger onclick function
+$("#postal-code").keypress(function(e){
+  if(e.which === 13){
+    $("#submit-info").click();
+  }
+})
 
