@@ -71,14 +71,25 @@ $("#submit-info").on("click", function (event) {
         console.log("school level: " + level);
 
         //variables that will be needed for expanded results
-        // var charter = searchResults[i].isCharterSchool;
-        // var magnet = searchResults[i].isMagnetSchool;
-        // var isPrivate = searchResults[i].isPrivate;
+        var charter = searchResults[i].isCharterSchool;
+        var magnet = searchResults[i].isMagnetSchool;
+        var isPrivate = searchResults[i].isPrivate;
+        var avgScore = "";
+        
+        if (searchResults[i].rankHistory === null){
+          avgScore = "N/A"
+        } else {
+          avgScore = searchResults[i].rankHistory[0].averageStandardScore;
+        };
+        
+        console.log
+
         // var avgScore = searchResults[i].rankHistory[0].averageStandardScore;
         // var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
         // var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
-        // console.log("charter? " + charter);
-        // console.log("magnet? :" + magnet);;
+        console.log("charter? " + charter);
+        console.log("magnet? :" + magnet);
+        console.log("is private? :" + isPrivate);
         // console.log("avg score: " + avgScore)
 
 
