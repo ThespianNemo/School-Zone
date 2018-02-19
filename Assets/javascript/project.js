@@ -58,7 +58,6 @@ $("#submit-info").on("click", function (event) {
         var level = searchResults[i].schoolLevel;
         var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
 
-<<<<<<< HEAD
         //variables that will be needed for expanded results
         var charter = searchResults[i].isCharterSchool;
         var magnet = searchResults[i].isMagnetSchool;
@@ -72,9 +71,7 @@ $("#submit-info").on("click", function (event) {
 
         //and unique ID to each item in results
         var ID = i +1; 
-=======
         //add unique ID to each item in results
->>>>>>> f1d94b254cca829d435679a90df28f205b40e300
         var table = $("<tr>");
         table.attr('id', ID);
 
