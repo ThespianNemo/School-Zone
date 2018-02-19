@@ -56,41 +56,51 @@ $("#submit-info").on("click", function (event) {
         var schoolName = searchResults[i].schoolName;
         var address = searchResults[i].address.street;
         var level = searchResults[i].schoolLevel;
-        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+        var stateRank = "";
 
-<<<<<<< HEAD
+        if (searchResults[i].rankHistory === null) {
+          stateRank = "N/A"
+        } else {
+          stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+        }
+
+        console.log(stateRank);
+
+        //stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+        // else stateRank = n/a
+        console.log("school level: " + level);
+
         //variables that will be needed for expanded results
-        var charter = searchResults[i].isCharterSchool;
-        var magnet = searchResults[i].isMagnetSchool;
-        var avgScore = searchResults[i].rankHistory[0].averageStandardScore;
-        var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
-        var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
-        console.log("charter? " + charter);
-        console.log("magnet? :" + magnet);;
-        console.log("avg score: " + avgScore)
-       
+        // var charter = searchResults[i].isCharterSchool;
+        // var magnet = searchResults[i].isMagnetSchool;
+        // var isPrivate = searchResults[i].isPrivate;
+        // var avgScore = searchResults[i].rankHistory[0].averageStandardScore;
+        // var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
+        // var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
+        // console.log("charter? " + charter);
+        // console.log("magnet? :" + magnet);;
+        // console.log("avg score: " + avgScore)
+
 
         //and unique ID to each item in results
-        var ID = i +1; 
-=======
+        var ID = i + 1;
         //add unique ID to each item in results
->>>>>>> f1d94b254cca829d435679a90df28f205b40e300
         var table = $("<tr>");
         table.attr('id', ID);
 
         //add school's data into the table
         var resultsList = ("<td>" + schoolName + "</td><td>" + address + "</td><td>" +
-          level + "</td><td>" + stateRank + "%" + "</td>");
+          level + "</td><td>" + stateRank + "</td>");
         table.append(resultsList)
 
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
 
-        $("#0").on("click", function (event) {
+        // $("#1").on("click", function (event) {
 
-          
 
-        });
+
+        // });
       };
     });
   });
