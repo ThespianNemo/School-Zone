@@ -48,26 +48,35 @@ $("#submit-info").on("click", function (event) {
       url: queryURL,
       method: 'GET',
     }).then(function (response) {
-      var searchResults = response.schoolList
+      var searchResults = response.schoolList;
       console.log(searchResults);
-      
-      for (var i = 0; i < searchResults.length; i++) {
-        
-        var schoolName = searchResults[i].schoolName;
-        
-        var address = searchResults[i].address.street;
-        
-        var level = searchResults[i].schoolLevel;
 
-        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;  
-       
-        // Add school's data into the table
-      $("#results-go-here > tbody").append("<tr><td>" + schoolName + "</td><td>" + address + "</td><td>" +
-      level + "</td><td>" + stateRank + "%" + "</td></tr>");
-    };
-  });
+      for (var i = 0; i < searchResults.length; i++) {
+
+        var schoolName = searchResults[i].schoolName;
+        var address = searchResults[i].address.street;
+        var level = searchResults[i].schoolLevel;
+        var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+
+        //and unique ID to each item in results
+        var table = $("<tr>");
+        table.attr('id', i + 1);
+
+        //add school's data into the table
+        var resultsList = ("<td>" + schoolName + "</td><td>" + address + "</td><td>" +
+          level + "</td><td>" + stateRank + "%" + "</td>");
+        table.append(resultsList)
+
+        // Add table to the HTML
+        $("#results-go-here > tbody").append(table);
+
+      };
+    });
   });
 });
+
+
+
 
 //event handler to reload page for user to start search over
 $("#restart-search").on("click", function (event) {
@@ -75,8 +84,8 @@ $("#restart-search").on("click", function (event) {
 });
 
 //enter/return key to trigger onclick function
-$("#postal-code").keypress(function(e){
-  if(e.which === 13){
+$("#postal-code").keypress(function (e) {
+  if (e.which === 13) {
     $("#submit-info").click();
   }
 })
