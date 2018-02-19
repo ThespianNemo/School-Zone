@@ -58,9 +58,21 @@ $("#submit-info").on("click", function (event) {
         var level = searchResults[i].schoolLevel;
         var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
 
+        //variables that will be needed for expanded results
+        var charter = searchResults[i].isCharterSchool;
+        var magnet = searchResults[i].isMagnetSchool;
+        var avgScore = searchResults[i].rankHistory[0].averageStandardScore;
+        var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
+        var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
+        console.log("charter? " + charter);
+        console.log("magnet? :" + magnet);;
+        console.log("avg score: " + avgScore)
+       
+
         //and unique ID to each item in results
+        var ID = i +1; 
         var table = $("<tr>");
-        table.attr('id', i + 1);
+        table.attr('id', ID);
 
         //add school's data into the table
         var resultsList = ("<td>" + schoolName + "</td><td>" + address + "</td><td>" +
@@ -70,12 +82,15 @@ $("#submit-info").on("click", function (event) {
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
 
+        $("#0").on("click", function (event) {
+
+          
+
+        });
       };
     });
   });
 });
-
-
 
 
 //event handler to reload page for user to start search over
@@ -89,4 +104,6 @@ $("#postal-code").keypress(function (e) {
     $("#submit-info").click();
   }
 })
+
+
 
