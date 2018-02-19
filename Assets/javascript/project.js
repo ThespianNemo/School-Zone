@@ -64,12 +64,6 @@ $("#submit-info").on("click", function (event) {
           stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
         }
 
-        console.log(stateRank);
-
-        //stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
-        // else stateRank = n/a
-        console.log("school level: " + level);
-
         //variables that will be needed for expanded results
         var charter = searchResults[i].isCharterSchool;
         var magnet = searchResults[i].isMagnetSchool;
@@ -82,14 +76,11 @@ $("#submit-info").on("click", function (event) {
           avgScore = searchResults[i].rankHistory[0].averageStandardScore;
         };
         
-        console.log
-
-        // var avgScore = searchResults[i].rankHistory[0].averageStandardScore;
-        // var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
-        // var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
-        console.log("charter? " + charter);
-        console.log("magnet? :" + magnet);
-        console.log("is private? :" + isPrivate);
+        var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
+        var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
+        // console.log("charter? " + charter);
+        // console.log("magnet? :" + magnet);
+        // console.log("is private? :" + isPrivate);
         // console.log("avg score: " + avgScore)
 
 

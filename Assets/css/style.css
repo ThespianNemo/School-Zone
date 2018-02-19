@@ -6,6 +6,13 @@ html, body {
 .jumbotron {
     background-color: #4682B4;
     color: GhostWhite;
+    opacity: 0.6;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}
+
+.first-row {
+    opacity: 0.6;
 }
 
 .panel-body {
@@ -24,6 +31,8 @@ html, body {
 
 .second-row {
     display: none;
+    opacity: 0.6;
+    font-weight: bold;
 }
 
 .third-row {
