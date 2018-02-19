@@ -58,7 +58,7 @@ $("#submit-info").on("click", function (event) {
         var level = searchResults[i].schoolLevel;
         var stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
 
-        //and unique ID to each item in results
+        //add unique ID to each item in results
         var table = $("<tr>");
         table.attr('id', i + 1);
 
