@@ -45,8 +45,6 @@ $("#submit-info").on("click", function (event) {
       stateResult = response.results[0].address_components[3].short_name;
     } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
       stateResult = response.results[0].address_components[4].short_name;
-    } else {
-
     };
 
     console.log("state: " + stateResult);
@@ -76,7 +74,7 @@ $("#submit-info").on("click", function (event) {
         if (searchResults[i].rankHistory === null) {
           stateRank = "N/A"
         } else {
-          stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+          stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
         }
 
         //variables that will be needed for expanded results
@@ -96,7 +94,7 @@ $("#submit-info").on("click", function (event) {
 
         //and unique ID to each item in results
         var ID = i + 1;
-        
+
         var table = $("<tr>");
         table.attr('id', ID);
 
@@ -107,7 +105,7 @@ $("#submit-info").on("click", function (event) {
 
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
-        
+
       };
     });
   });
