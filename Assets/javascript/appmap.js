@@ -6,7 +6,7 @@ function initMap() {
       center: {lat: 52.632469, lng: -1.689423}  });
   
     // Load the stores GeoJSON onto the map.
-    map.data.loadGeoJson('stores.json');
+    map.data.loadGeoJson('searchResults');
   
     const infoWindow = new google.maps.InfoWindow();
   
