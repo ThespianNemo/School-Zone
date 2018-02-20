@@ -36,6 +36,7 @@ $("#submit-info").on("click", function (event) {
     url: getStateUrl,
     method: "GET"
   }).then(function (response) {
+    console.log(response);
     var stateResult = response.results[0].address_components[3].short_name;
     console.log("state: " + stateResult);
 
