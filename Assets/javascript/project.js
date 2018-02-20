@@ -12,6 +12,21 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+$("#map").hide();
+
+function initMap() {
+  var uluru = {lat: 41.8781, lng:-87.6298};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+}
+
+
 //when user clicks "go" run this function
 $("#submit-info").on("click", function (event) {
 
@@ -20,6 +35,7 @@ $("#submit-info").on("click", function (event) {
   //removes search box upon results loading
   $(".first-row").hide();
   //shows the class which default is hidden on load
+  $("#map").show();
   $(".second-row").show();
   $(".third-row").show();
 
@@ -53,6 +69,7 @@ $("#submit-info").on("click", function (event) {
       url: queryURL,
       method: 'GET',
     }).then(function (response) {
+      console.log(response);
       var searchResults = response.schoolList;
       console.log(searchResults[2]);
 
