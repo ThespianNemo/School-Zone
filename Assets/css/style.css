@@ -38,6 +38,18 @@ html, body {
 .third-row {
     display: none;
 }
+
+.fourth-row {
+    display: none;
+    opacity: 0.6;
+    font-weight: bold;
+}
+.fifth-row {
+    display: none;
+    opacity: 0.6;
+    font-weight: bold;
+}
+
 .container {
     background-image: url("../images/park.jpeg");
     background-repeat: no-repeat;
