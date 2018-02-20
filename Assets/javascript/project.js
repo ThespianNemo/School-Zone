@@ -36,8 +36,17 @@ $("#submit-info").on("click", function (event) {
     url: getStateUrl,
     method: "GET"
   }).then(function (response) {
-    console.log(response);
-    var stateResult = response.results[0].address_components[3].short_name;
+    var stateResult = "";
+
+    //check for State info in object
+    if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
+      stateResult = response.results[0].address_components[2].short_name;
+    } else if (response.results[0].address_components[3].types[0] === "administrative_area_level_1") {
+      stateResult = response.results[0].address_components[3].short_name;
+    } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
+      stateResult = response.results[0].address_components[4].short_name;
+    };
+
     console.log("state: " + stateResult);
 
     var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
@@ -62,50 +71,50 @@ $("#submit-info").on("click", function (event) {
         if (searchResults[i].rankHistory === null) {
           stateRank = "N/A"
         } else {
-          stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
+          stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
         }
 
-        console.log(stateRank);
-
-        //stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage;
-        // else stateRank = n/a
-        console.log("school level: " + level);
-
         //variables that will be needed for expanded results
-        // var charter = searchResults[i].isCharterSchool;
-        // var magnet = searchResults[i].isMagnetSchool;
-        // var isPrivate = searchResults[i].isPrivate;
-        // var avgScore = searchResults[i].rankHistory[0].averageStandardScore;
-        // var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
-        // var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
-        // console.log("charter? " + charter);
-        // console.log("magnet? :" + magnet);;
-        // console.log("avg score: " + avgScore)
+        var charter = searchResults[i].isCharterSchool;
+        var magnet = searchResults[i].isMagnetSchool;
+        var isPrivate = searchResults[i].isPrivate;
+        var avgScore = "";
 
+        if (searchResults[i].rankHistory === null) {
+          avgScore = "N/A"
+        } else {
+          avgScore = searchResults[i].rankHistory[0].averageStandardScore;
+        };
+
+        var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
+        var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
 
         //and unique ID to each item in results
-        var ID = i +1; 
         var ID = i + 1;
-        //add unique ID to each item in results
         var table = $("<tr>");
         table.attr('id', ID);
-
+        //add class to each row
+        table.addClass("result");
+      
         //add school's data into the table
-        var resultsList = ("<td>" + schoolName + "</td><td>" + address + "</td><td>" +
+        var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
           level + "</td><td>" + stateRank + "</td>");
-        table.append(resultsList)
+        
+        table.append(resultsList);
 
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
+        
+        //click even for any item in results
+        $(".result").on("click", function (event) {
+          window.location.href = "results.html";
 
-        // $("#1").on("click", function (event) {
-
-
-
-        // });
+        });
       };
     });
   });
+
+
 });
 
 
