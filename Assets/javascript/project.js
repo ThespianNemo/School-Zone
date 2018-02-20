@@ -49,9 +49,6 @@ $("#submit-info").on("click", function (event) {
 
     console.log("state: " + stateResult);
 
-    // var test = response.results[0].address_components[3].types[0];
-    // console.log(test);
-
     var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
 
     console.log("schooldigger: " + queryURL);
@@ -94,21 +91,30 @@ $("#submit-info").on("click", function (event) {
 
         //and unique ID to each item in results
         var ID = i + 1;
-
         var table = $("<tr>");
         table.attr('id', ID);
-
+        //add class to each row
+        table.addClass("result");
+      
         //add school's data into the table
-        var resultsList = ("<td>" + schoolName + "</td><td>" + address + "</td><td>" +
+        var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
           level + "</td><td>" + stateRank + "</td>");
-        table.append(resultsList)
+        
+        table.append(resultsList);
 
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
+        
+        //click even for any item in results
+        $(".result").on("click", function (event) {
+          window.location.href = "results.html";
 
+        });
       };
     });
   });
+
+
 });
 
 
