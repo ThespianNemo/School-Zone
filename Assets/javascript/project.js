@@ -208,7 +208,7 @@ $(window).on("load", function () {
             var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents;
             var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents;
 
-            $("#caucasian").html(caucasian);
+            $("#caucasian").html("<br>" + caucasian);
             $("#african-american").html(africanAm);
             $("#hispanic").html(hispanic);
             $("#asian-american").html(asianAm);
