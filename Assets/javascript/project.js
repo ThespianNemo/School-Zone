@@ -62,7 +62,7 @@ $("#submit-info").on("click", function (event) {
     } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
       stateResult = response.results[0].address_components[4].short_name;
     };
-
+    console.log(response);
     console.log("state: " + stateResult);
 
     var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
@@ -98,6 +98,10 @@ $("#submit-info").on("click", function (event) {
         var isPrivate = searchResults[i].isPrivate;
         var avgScore = "";
 
+        //variable needed for map markers
+        var city = searchResults[i].address.city;
+        console.log(address);
+        console.log(city);
         if (searchResults[i].rankHistory === null) {
           avgScore = "N/A"
         } else {
@@ -122,6 +126,17 @@ $("#submit-info").on("click", function (event) {
 
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
+
+        var markerQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=5606+Theodosia+Ave,+St+Louis,+MO&key=AIzaSyD4brFWO8tDRkdXfI5gXJNrTfUnl0fWT9Q";
+
+
+// ajax function to get search results for the given zip code 
+    $.ajax({
+      url: markerQueryURL,
+      method: 'GET',
+    }).then(function (response) {
+      console.log(response);var searchResults = response.schoolList;
+    });
         
         //click even for any item in results
         $(".result").on("click", function (event) {
@@ -146,6 +161,5 @@ $("#postal-code").keypress(function (e) {
     $("#submit-info").click();
   }
 })
-
 
 
