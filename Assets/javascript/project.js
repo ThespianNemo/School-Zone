@@ -15,6 +15,7 @@ var database = firebase.database();
 $("#map").hide();
 
 // map function to initizlize map on the page
+//make map center on zipcode
 var map;
 
 function initMap() {
