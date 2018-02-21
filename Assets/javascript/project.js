@@ -1,4 +1,3 @@
-
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyDJy6cU-2ytgAE8bEXNYyRghC2BQefJ3YM",
@@ -15,16 +14,18 @@ var database = firebase.database();
 
 $("#map").hide();
 
+var map;
+
 function initMap() {
-  var uluru = { lat: 41.8781, lng: -87.6298 };
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 8,
-    center: uluru
+  var chicago = { lat: 41.8781, lng: -87.6298 };
+   map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 14,
+    center: chicago
   });
-  var marker = new google.maps.Marker({
-    position: uluru,
-    map: map
-  });
+
+
+
+
 }
 $(window).on("load", function () {
   $("#submit-info").on("click", function (event) {
@@ -60,7 +61,7 @@ $(window).on("load", function () {
         url: queryURL,
         method: 'GET',
       }).then(function (response) {
-
+          console.log(response);
         //removes search box upon results loading
         $(".first-row").hide();
         //shows the class which default is hidden on load
@@ -73,9 +74,41 @@ $(window).on("load", function () {
         for (var i = 0; i < searchResults.length; i++) {
 
           var schoolName = searchResults[i].schoolName;
-          var address = searchResults[i].address.street;
+          var street = searchResults[i].address.street;
+          var city = searchResults[i].address.city;
+          var state = searchResults[i].address.state;
           var level = searchResults[i].schoolLevel;
           var stateRank = "";
+
+          // combine address results into a readable address street+city+state+maybe zipcode
+          var address = street + " " + city + " " + state;
+          // console.log(address); 
+          
+          // use google geocode api to return latitude and longitude
+          var geocodeUrl= "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
+          // console.log (geocodeUrl);
+
+          //make request to geocodeUrl
+          $.ajax({
+            url: geocodeUrl,
+            method: "GET"
+          }).then(function (response) {
+            //get lat and long from response
+            var coords = response.results[0].geometry.location;
+            console.log(coords);
+            // use lat and long to create marker on map 
+            var marker = new google.maps.Marker({
+              position: coords,
+              map: map
+            });
+//hover marker with school info
+
+
+          })
+
+
+          
+
 
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
@@ -91,7 +124,7 @@ $(window).on("load", function () {
           table.addClass("result");
 
           //add school's data into the table
-          var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
+          var resultsList = ("<td>" + schoolName + "<td>" + street + "</td><td>" +
             level + "</td><td>" + stateRank + "</td>");
 
           table.append(resultsList);
@@ -107,6 +140,8 @@ $(window).on("load", function () {
             $(".second-row").hide();
             $(".third-row").hide();
 
+            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " "  + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
+
             if (searchResults[choice].rankHistory === null) {
               avgScore = "N/A";
             } else {
@@ -115,7 +150,7 @@ $(window).on("load", function () {
 
             if (searchResults[choice].rankHistory === null) {
               stateRank = "N/A";
-              var starCount = "";
+              var starCount = "Not Ranked";
             } else {
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
               var starCount = searchResults[choice].rankHistory[0].rankStars;
@@ -138,23 +173,24 @@ $(window).on("load", function () {
             };
 
             var starDisplay = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>"
+            var starEmpty = "<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>"
 
             if (starCount === 0) {
-              starCount = ""
+              starCount = $(starEmpty + starEmpty + starEmpty + starEmpty + starEmpty);
             } else if (starCount === 1) {
-              starCount = $(starDisplay);
+              starCount = $(starDisplay + starEmpty + starEmpty + starEmpty + starEmpty);
             } else if (starCount === 2) {
-              starCount = $(starDisplay + starDisplay);
+              starCount = $(starDisplay + starDisplay + starEmpty + starEmpty + starEmpty);
             } else if (starCount === 3) {
-              starCount = $(starDisplay + starDisplay + starDisplay);
+              starCount = $(starDisplay + starDisplay + starDisplay + starEmpty + starEmpty);
             } else if (starCount === 4) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay);
+              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starEmpty);
             } else if (starCount === 5) {
               starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starDisplay);
             }
 
             $("#school-name").html(searchResults[choice].schoolName);
-            $("#address").html(searchResults[choice].address.street);
+            $("#full-address").html(fullAddress);
             $("#star-count").html(starCount);
             $("#level").html(searchResults[choice].schoolLevel + " School");
             $("#state-rank").html(stateRank);
