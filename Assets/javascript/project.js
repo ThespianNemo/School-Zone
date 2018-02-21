@@ -1,4 +1,3 @@
-
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyDJy6cU-2ytgAE8bEXNYyRghC2BQefJ3YM",
@@ -16,7 +15,7 @@ var database = firebase.database();
 $("#map").hide();
 
 function initMap() {
-  var uluru = {lat: 41.8781, lng: -87.6298};
+  var uluru = { lat: 41.8781, lng: -87.6298 };
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
     center: uluru
@@ -119,11 +118,11 @@ $("#submit-info").on("click", function (event) {
 
           if (searchResults[choice].isPrivate === true) {
             type = "Private";
-          } else if (searchResults[choice].isCharterSchool === "Yes" ) {
+          } else if (searchResults[choice].isCharterSchool === "Yes") {
             type = "Charter";
-          } else if (searchResults[choice].isMagnetSchool === "Yes" ) {
+          } else if (searchResults[choice].isMagnetSchool === "Yes") {
             type = "Magnet";
-          } else { 
+          } else {
             type = "Public";
           }
 
@@ -136,12 +135,11 @@ $("#submit-info").on("click", function (event) {
           $("#school-name").html(searchResults[choice].schoolName);
           $("#address").html(searchResults[choice].address.street);
           $("#level").html(searchResults[choice].schoolLevel + " School");
-          $("#state-rank").html("State Rank: " + stateRank);
-          $("#type").html("Type: " + type);
-          $("#avg-score").html("Average Score: " + avgScore);
-          $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-          $("#ratio").html("Student to Teacher Ratio: " + ratio);
-
+          $("#state-rank").html(stateRank);
+          $("#type").html(type);
+          $("#avg-score").html(avgScore.toFixed(2));
+          $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+          $("#ratio").html(ratio);
         });
       };
     });
@@ -159,7 +157,10 @@ $("#start-over").on("click", function (event) {
 
 
 $("#go-back").on("click", function (event) {
-
+  $(".second-row").show();
+  $(".third-row").show();
+  $(".fourth-row").hide();
+  $(".fifth-row").hide();
 });
 
 //enter/return key to trigger onclick function
@@ -167,8 +168,7 @@ $("#postal-code").keypress(function (e) {
   if (e.which === 13) {
     $("#submit-info").click();
   }
-})
 
-
+});
 
 
