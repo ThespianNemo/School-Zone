@@ -140,6 +140,8 @@ $(window).on("load", function () {
             $(".second-row").hide();
             $(".third-row").hide();
 
+            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " "  + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
+
             if (searchResults[choice].rankHistory === null) {
               avgScore = "N/A";
             } else {
@@ -148,7 +150,7 @@ $(window).on("load", function () {
 
             if (searchResults[choice].rankHistory === null) {
               stateRank = "N/A";
-              var starCount = "";
+              var starCount = "Not Ranked";
             } else {
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
               var starCount = searchResults[choice].rankHistory[0].rankStars;
@@ -188,7 +190,7 @@ $(window).on("load", function () {
             }
 
             $("#school-name").html(searchResults[choice].schoolName);
-            $("#address").html(searchResults[choice].address.street);
+            $("#full-address").html(fullAddress);
             $("#star-count").html(starCount);
             $("#level").html(searchResults[choice].schoolLevel + " School");
             $("#state-rank").html(stateRank);

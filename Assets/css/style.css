@@ -58,6 +58,7 @@ html, body {
     background-color: darkkhaki;
     background-size: cover;
     padding-bottom: 25%;
+    cursor: pointer;
 }
 
 #postal-code {
