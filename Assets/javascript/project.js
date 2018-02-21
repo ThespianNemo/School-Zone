@@ -28,6 +28,7 @@ function initMap() {
 
 }
 $(window).on("load", function () {
+
   $("#submit-info").on("click", function (event) {
     event.preventDefault();
 
@@ -201,6 +202,23 @@ $(window).on("load", function () {
 
             //additional variables to display on right side of exteneded results page
             var contact = searchResults[choice].phone;
+            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents;
+            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents;
+            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents;
+            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents;
+            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents;
+
+            $("#caucasian").html(caucasian);
+            $("#african-american").html(africanAm);
+            $("#hispanic").html(hispanic);
+            $("#asian-american").html(asianAm);
+            $("#indian-american").html(indianAm);
+
+            console.log(caucasian);
+            console.log(africanAm);
+            console.log(hispanic);
+            console.log(asianAm);
+            console.log(indianAm);
 
           });
         };
