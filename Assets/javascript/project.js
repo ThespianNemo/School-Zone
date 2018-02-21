@@ -18,7 +18,7 @@ $("#map").hide();
 var map;
 
 function initMap() {
-//c/
+
   var chicago = { lat: 41.8781, lng: -87.6298 };
    map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
@@ -26,7 +26,13 @@ function initMap() {
   });
 }
 
+// function initMap() {
+  // var options = {
+  //     zoom: 10,
+  //     center: coords
+  // }
 
+  // var map = new google.maps.Map(document.getElementById('map'), options)
 
 $(window).on("load", function () {
   $("#submit-info").on("click", function (event) {
@@ -169,17 +175,18 @@ $(window).on("load", function () {
             };
 
             var starDisplay = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>"
+            var starEmpty = "<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>"
 
             if (starCount === 0) {
-              starCount = ""
+              starCount = $(starEmpty + starEmpty + starEmpty + starEmpty + starEmpty);
             } else if (starCount === 1) {
-              starCount = $(starDisplay);
+              starCount = $(starDisplay + starEmpty + starEmpty + starEmpty + starEmpty);
             } else if (starCount === 2) {
-              starCount = $(starDisplay + starDisplay);
+              starCount = $(starDisplay + starDisplay + starEmpty + starEmpty + starEmpty);
             } else if (starCount === 3) {
-              starCount = $(starDisplay + starDisplay + starDisplay);
+              starCount = $(starDisplay + starDisplay + starDisplay + starEmpty + starEmpty);
             } else if (starCount === 4) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay);
+              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starEmpty);
             } else if (starCount === 5) {
               starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starDisplay);
             }
