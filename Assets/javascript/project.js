@@ -35,6 +35,7 @@ function initMap() {
   // var map = new google.maps.Map(document.getElementById('map'), options)
 
 $(window).on("load", function () {
+
   $("#submit-info").on("click", function (event) {
     event.preventDefault();
 
@@ -144,6 +145,8 @@ $(window).on("load", function () {
             $(".second-row").hide();
             $(".third-row").hide();
 
+            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " "  + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
+
             if (searchResults[choice].rankHistory === null) {
               avgScore = "N/A";
             } else {
@@ -152,7 +155,7 @@ $(window).on("load", function () {
 
             if (searchResults[choice].rankHistory === null) {
               stateRank = "N/A";
-              var starCount = "";
+              var starCount = "Not Ranked";
             } else {
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
               var starCount = searchResults[choice].rankHistory[0].rankStars;
@@ -192,7 +195,7 @@ $(window).on("load", function () {
             }
 
             $("#school-name").html(searchResults[choice].schoolName);
-            $("#address").html(searchResults[choice].address.street);
+            $("#full-address").html(fullAddress);
             $("#star-count").html(starCount);
             $("#level").html(searchResults[choice].schoolLevel + " School");
             $("#state-rank").html(stateRank);
@@ -203,6 +206,17 @@ $(window).on("load", function () {
 
             //additional variables to display on right side of exteneded results page
             var contact = searchResults[choice].phone;
+            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents;
+            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents;
+            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents;
+            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents;
+            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents;
+
+            $("#caucasian").html("<br>" + caucasian);
+            $("#african-american").html(africanAm);
+            $("#hispanic").html(hispanic);
+            $("#asian-american").html(asianAm);
+            $("#indian-american").html(indianAm);
 
           });
         };

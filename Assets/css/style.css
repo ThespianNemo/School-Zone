@@ -10,10 +10,16 @@ html, body {
     padding-top: 15px;
     padding-bottom: 25px;
     margin-top: 30px;
+    font-family: "Audiowide", cursive;;
 }
 
 .first-row {
     opacity: 0.8;
+}
+
+#extended-results-here {
+    text-align: center;
+    font-weight: bold;
 }
 
 .panel-body {
@@ -44,6 +50,7 @@ html, body {
     display: none;
     opacity: 0.8;
     font-weight: bold;
+    color: ghostwhite;
 }
 .fifth-row {
     display: none;
@@ -58,6 +65,7 @@ html, body {
     background-color: darkkhaki;
     background-size: cover;
     padding-bottom: 25%;
+    cursor: pointer;
 }
 
 #postal-code {
@@ -67,6 +75,10 @@ html, body {
 #school-header {
     color: GhostWhite;
     font-weight: bold;
+}
+
+#student_teacher{
+    text-align: left;
 }
 
 #map {
