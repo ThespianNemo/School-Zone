@@ -26,151 +26,153 @@ function initMap() {
     map: map
   });
 }
+$(window).on("load", function () {
+  $("#submit-info").on("click", function (event) {
+    event.preventDefault();
 
-$("#submit-info").on("click", function (event) {
-  event.preventDefault();
-  //removes search box upon results loading
-  $(".first-row").hide();
-  //shows the class which default is hidden on load
-  $("#map").show();
-  $(".second-row").show();
-  $(".third-row").show();
 
-  //grabs zip code user entered
-  var userZip = $("#postal-code").val().trim();
+    //grabs zip code user entered
+    var userZip = $("#postal-code").val().trim();
 
-  //use geo code api to get state from zip code
-  var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
+    //use geo code api to get state from zip code
+    var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
 
-  //ajax function to get corresponding state
-  $.ajax({
-    url: getStateUrl,
-    method: "GET"
-  }).then(function (response) {
-    var stateResult = "";
-
-    //check for State info in object
-    if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
-      stateResult = response.results[0].address_components[2].short_name;
-    } else if (response.results[0].address_components[3].types[0] === "administrative_area_level_1") {
-      stateResult = response.results[0].address_components[3].short_name;
-    } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
-      stateResult = response.results[0].address_components[4].short_name;
-    };
-
-    var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
-
-    // ajax function to get search results for the given zip code 
+    //ajax function to get corresponding state
     $.ajax({
-      url: queryURL,
-      method: 'GET',
+      url: getStateUrl,
+      method: "GET"
     }).then(function (response) {
+      var stateResult = "";
 
-      var searchResults = response.schoolList;
+      //check for State info in object
+      if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
+        stateResult = response.results[0].address_components[2].short_name;
+      } else if (response.results[0].address_components[3].types[0] === "administrative_area_level_1") {
+        stateResult = response.results[0].address_components[3].short_name;
+      } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
+        stateResult = response.results[0].address_components[4].short_name;
+      };
 
-      for (var i = 0; i < searchResults.length; i++) {
+      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
 
-        var schoolName = searchResults[i].schoolName;
-        var address = searchResults[i].address.street;
-        var level = searchResults[i].schoolLevel;
-        var stateRank = "";
+      // ajax function to get search results for the given zip code 
+      $.ajax({
+        url: queryURL,
+        method: 'GET',
+      }).then(function (response) {
 
-        if (searchResults[i].rankHistory === null) {
-          stateRank = "N/A"
-        } else {
-          stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
-        }
+        //removes search box upon results loading
+        $(".first-row").hide();
+        //shows the class which default is hidden on load
+        $("#map").show();
+        $(".second-row").show();
+        $(".third-row").show();
 
-        //and unique ID to each item in results
-        var ID = i;
-        var table = $("<tr>");
-        table.attr('id', ID);
-        //add class to each row
-        table.addClass("result");
+        var searchResults = response.schoolList;
 
-        //add school's data into the table
-        var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
-          level + "</td><td>" + stateRank + "</td>");
+        for (var i = 0; i < searchResults.length; i++) {
 
-        table.append(resultsList);
+          var schoolName = searchResults[i].schoolName;
+          var address = searchResults[i].address.street;
+          var level = searchResults[i].schoolLevel;
+          var stateRank = "";
 
-        // Add table to the HTML
-        $("#results-go-here > tbody").append(table);
-
-        $(".result").on("click", function () {
-          var choice = ($(this).attr("id"));
-
-          $(".fourth-row").show();
-          $(".fifth-row").show();
-          $(".second-row").hide();
-          $(".third-row").hide();
-
-          if (searchResults[choice].rankHistory === null) {
-            avgScore = "N/A";
+          if (searchResults[i].rankHistory === null) {
+            stateRank = "N/A"
           } else {
-            avgScore = searchResults[choice].rankHistory[0].averageStandardScore;
-          };
-
-          if (searchResults[choice].rankHistory === null) {
-            stateRank = "N/A";
-          } else {
-            stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
-          };
-
-          if (searchResults[choice].isPrivate === true) {
-            type = "Private";
-          } else if (searchResults[choice].isCharterSchool === "Yes") {
-            type = "Charter";
-          } else if (searchResults[choice].isMagnetSchool === "Yes") {
-            type = "Magnet";
-          } else {
-            type = "Public";
+            stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
           }
 
-          if (searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio === null) {
-            ratio = "N/A";
-          } else {
-            ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
-          };
+          //and unique ID to each item in results
+          var ID = i;
+          var table = $("<tr>");
+          table.attr('id', ID);
+          //add class to each row
+          table.addClass("result");
 
-          $("#school-name").html(searchResults[choice].schoolName);
-          $("#address").html(searchResults[choice].address.street);
-          $("#level").html(searchResults[choice].schoolLevel + " School");
-          $("#state-rank").html(stateRank);
-          $("#type").html(type);
-          $("#avg-score").html(avgScore.toFixed(2));
-          $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-          $("#ratio").html(ratio);
-        });
-      };
+          //add school's data into the table
+          var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
+            level + "</td><td>" + stateRank + "</td>");
+
+          table.append(resultsList);
+
+          // Add table to the HTML
+          $("#results-go-here > tbody").append(table);
+
+          $(".result").on("click", function () {
+            var choice = ($(this).attr("id"));
+
+            $(".fourth-row").show();
+            $(".fifth-row").show();
+            $(".second-row").hide();
+            $(".third-row").hide();
+
+            if (searchResults[choice].rankHistory === null) {
+              avgScore = "N/A";
+            } else {
+              avgScore = searchResults[choice].rankHistory[0].averageStandardScore;
+            };
+
+            if (searchResults[choice].rankHistory === null) {
+              stateRank = "N/A";
+            } else {
+              stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
+            };
+
+            if (searchResults[choice].isPrivate === true) {
+              type = "Private";
+            } else if (searchResults[choice].isCharterSchool === "Yes") {
+              type = "Charter";
+            } else if (searchResults[choice].isMagnetSchool === "Yes") {
+              type = "Magnet";
+            } else {
+              type = "Public";
+            }
+
+            if (searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio === null) {
+              ratio = "N/A";
+            } else {
+              ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
+            };
+
+            $("#school-name").html(searchResults[choice].schoolName);
+            $("#address").html(searchResults[choice].address.street);
+            $("#level").html(searchResults[choice].schoolLevel + " School");
+            $("#state-rank").html(stateRank);
+            $("#type").html(type);
+            $("#avg-score").html(avgScore.toFixed(2));
+            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+            $("#ratio").html(ratio);
+          });
+        };
+      });
     });
   });
+
+  //event handler to reload page for user to start search over
+  $("#restart-search").on("click", function (event) {
+    location.reload();
+  });
+
+  $("#start-over").on("click", function (event) {
+    location.reload();
+  });
+
+
+  $("#go-back").on("click", function (event) {
+    $(".second-row").show();
+    $(".third-row").show();
+    $(".fourth-row").hide();
+    $(".fifth-row").hide();
+  });
+
+  //enter/return key to trigger onclick function
+  $("#postal-code").keypress(function (e) {
+    if (e.which === 13) {
+      $("#submit-info").click();
+    }
+  });
 });
-
-//event handler to reload page for user to start search over
-$("#restart-search").on("click", function (event) {
-  location.reload();
-});
-
-$("#start-over").on("click", function (event) {
-  location.reload();
-});
-
-
-$("#go-back").on("click", function (event) {
-  $(".second-row").show();
-  $(".third-row").show();
-  $(".fourth-row").hide();
-  $(".fifth-row").hide();
-});
-
-//enter/return key to trigger onclick function
-$("#postal-code").keypress(function (e) {
-  if (e.which === 13) {
-    $("#submit-info").click();
-  }
-})
-
 
 
 
