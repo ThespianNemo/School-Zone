@@ -1,3 +1,4 @@
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyDJy6cU-2ytgAE8bEXNYyRghC2BQefJ3YM",
@@ -26,23 +27,17 @@ function initMap() {
   });
 }
 
-
-//when user clicks "go" run this function
 $("#submit-info").on("click", function (event) {
-
   event.preventDefault();
-
+  //removes search box upon results loading
+  $(".first-row").hide();
   //shows the class which default is hidden on load
   $("#map").show();
   $(".second-row").show();
   $(".third-row").show();
-  //removes search box upon results loading
-  $(".first-row").hide();
 
   //grabs zip code user entered
   var userZip = $("#postal-code").val().trim();
-  console.log("zip code: " + userZip);
-  // location.href = "results.html";
 
   //use geo code api to get state from zip code
   var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
@@ -62,22 +57,16 @@ $("#submit-info").on("click", function (event) {
     } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
       stateResult = response.results[0].address_components[4].short_name;
     };
-    console.log(response);
-    console.log("state: " + stateResult);
 
     var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
-
-    console.log("schooldigger: " + queryURL);
-
 
     // ajax function to get search results for the given zip code 
     $.ajax({
       url: queryURL,
       method: 'GET',
     }).then(function (response) {
-      console.log(response);
+
       var searchResults = response.schoolList;
-      console.log(searchResults);
 
       for (var i = 0; i < searchResults.length; i++) {
 
@@ -92,67 +81,85 @@ $("#submit-info").on("click", function (event) {
           stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
         }
 
-        //variables that will be needed for expanded results
-        var charter = searchResults[i].isCharterSchool;
-        var magnet = searchResults[i].isMagnetSchool;
-        var isPrivate = searchResults[i].isPrivate;
-        var avgScore = "";
-
-        //variable needed for map markers
-        var city = searchResults[i].address.city;
-        console.log(address);
-        console.log(city);
-        if (searchResults[i].rankHistory === null) {
-          avgScore = "N/A"
-        } else {
-          avgScore = searchResults[i].rankHistory[0].averageStandardScore;
-        };
-
-        var studentSize = searchResults[i].schoolYearlyDetails[0].numberOfStudents;
-        var ratio = searchResults[i].schoolYearlyDetails[0].pupilTeacherRatio;
-
         //and unique ID to each item in results
-        var ID = i + 1;
+        var ID = i;
         var table = $("<tr>");
         table.attr('id', ID);
         //add class to each row
         table.addClass("result");
-      
+
         //add school's data into the table
         var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
           level + "</td><td>" + stateRank + "</td>");
-        
+
         table.append(resultsList);
 
         // Add table to the HTML
         $("#results-go-here > tbody").append(table);
 
-        var markerQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=5606+Theodosia+Ave,+St+Louis,+MO&key=AIzaSyD4brFWO8tDRkdXfI5gXJNrTfUnl0fWT9Q";
+        $(".result").on("click", function () {
+          var choice = ($(this).attr("id"));
 
+          $(".fourth-row").show();
+          $(".fifth-row").show();
+          $(".second-row").hide();
+          $(".third-row").hide();
 
-// ajax function to get search results for the given zip code 
-    $.ajax({
-      url: markerQueryURL,
-      method: 'GET',
-    }).then(function (response) {
-      console.log(response);var searchResults = response.schoolList;
-    });
-        
-        //click even for any item in results
-        $(".result").on("click", function (event) {
-            window.location.href = "results.html";
+          if (searchResults[choice].rankHistory === null) {
+            avgScore = "N/A";
+          } else {
+            avgScore = searchResults[choice].rankHistory[0].averageStandardScore;
+          };
+
+          if (searchResults[choice].rankHistory === null) {
+            stateRank = "N/A";
+          } else {
+            stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
+          };
+
+          if (searchResults[choice].isPrivate === true) {
+            type = "Private";
+          } else if (searchResults[choice].isCharterSchool === "Yes" ) {
+            type = "Charter";
+          } else if (searchResults[choice].isMagnetSchool === "Yes" ) {
+            type = "Magnet";
+          } else { 
+            type = "Public";
+          }
+
+          if (searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio === null) {
+            ratio = "N/A";
+          } else {
+            ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
+          };
+
+          $("#school-name").html(searchResults[choice].schoolName);
+          $("#address").html(searchResults[choice].address.street);
+          $("#level").html(searchResults[choice].schoolLevel + " School");
+          $("#state-rank").html("State Rank: " + stateRank);
+          $("#type").html("Type: " + type);
+          $("#avg-score").html("Average Score: " + avgScore);
+          $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+          $("#ratio").html("Student to Teacher Ratio: " + ratio);
+
         });
       };
     });
   });
-
-
 });
-
 
 //event handler to reload page for user to start search over
 $("#restart-search").on("click", function (event) {
   location.reload();
+});
+
+$("#start-over").on("click", function (event) {
+  location.reload();
+});
+
+
+$("#go-back").on("click", function (event) {
+
 });
 
 //enter/return key to trigger onclick function
@@ -161,5 +168,7 @@ $("#postal-code").keypress(function (e) {
     $("#submit-info").click();
   }
 })
+
+
 
 
