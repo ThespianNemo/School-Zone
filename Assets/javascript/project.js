@@ -87,7 +87,7 @@ $(window).on("load", function () {
           var ID = i;
           var table = $("<tr>");
           table.attr('id', ID);
-          //add class to each row
+          
           table.addClass("result");
 
           //add school's data into the table
