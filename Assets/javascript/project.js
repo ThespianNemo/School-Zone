@@ -20,10 +20,10 @@ var map;
 
 function initMap() {
 
-  var chicago = { lat: 41.8781, lng: -87.6298 };
+  var mapCenter = { lat: 41.8781, lng: -87.6298 };
    map = new google.maps.Map(document.getElementById('map'), {
+    center: mapCenter,
     zoom: 8,
-    center: chicago
   });
 }
 
