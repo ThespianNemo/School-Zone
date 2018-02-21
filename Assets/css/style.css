@@ -6,14 +6,14 @@ html, body {
 .jumbotron {
     background-color: #4682B4;
     color: ghostwhite;
-    opacity: 0.6;
+    opacity: 0.8;
     padding-top: 15px;
     padding-bottom: 25px;
     margin-top: 30px;
 }
 
 .first-row {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .panel-body {
@@ -32,7 +32,7 @@ html, body {
 
 .second-row {
     display: none;
-    opacity: 0.6;
+    opacity: 0.8;
     font-weight: bold;
 }
 
@@ -42,12 +42,12 @@ html, body {
 
 .fourth-row {
     display: none;
-    opacity: 0.6;
+    opacity: 0.8;
     font-weight: bold;
 }
 .fifth-row {
     display: none;
-    opacity: 0.6;
+    opacity: 0.8;
     font-weight: bold;
 }
 
