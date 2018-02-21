@@ -14,19 +14,20 @@ var database = firebase.database();
 
 $("#map").hide();
 
+// map function to initizlize map on the page
 var map;
 
 function initMap() {
+//c/
   var chicago = { lat: 41.8781, lng: -87.6298 };
    map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
+    zoom: 8,
     center: chicago
   });
-
-
-
-
 }
+
+
+
 $(window).on("load", function () {
   $("#submit-info").on("click", function (event) {
     event.preventDefault();
@@ -99,16 +100,13 @@ $(window).on("load", function () {
             // use lat and long to create marker on map 
             var marker = new google.maps.Marker({
               position: coords,
+              center: city,
               map: map
             });
 //hover marker with school info
 
 
           })
-
-
-          
-
 
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
