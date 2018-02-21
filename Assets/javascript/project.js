@@ -214,12 +214,6 @@ $(window).on("load", function () {
             $("#asian-american").html(asianAm);
             $("#indian-american").html(indianAm);
 
-            console.log(caucasian);
-            console.log(africanAm);
-            console.log(hispanic);
-            console.log(asianAm);
-            console.log(indianAm);
-
           });
         };
       });
