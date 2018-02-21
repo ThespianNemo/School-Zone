@@ -19,18 +19,10 @@ var map;
 function initMap() {
   var chicago = { lat: 41.8781, lng: -87.6298 };
    map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 8,
+    zoom: 14,
     center: chicago
   });
-  var marker = new google.maps.Marker({
-    position: chicago,
-    map: map
-  });
 
-  var marker = new google.maps.Marker({
-    position: {lat: 42.0451, lng: -87.6877},
-    map: map
-  });
 
 
 
@@ -128,7 +120,7 @@ $(window).on("load", function () {
           var ID = i;
           var table = $("<tr>");
           table.attr('id', ID);
-          
+
           table.addClass("result");
 
           //add school's data into the table
@@ -156,8 +148,10 @@ $(window).on("load", function () {
 
             if (searchResults[choice].rankHistory === null) {
               stateRank = "N/A";
+              var starCount = "";
             } else {
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
+              var starCount = searchResults[choice].rankHistory[0].rankStars;
             };
 
             if (searchResults[choice].isPrivate === true) {
@@ -176,14 +170,35 @@ $(window).on("load", function () {
               ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
             };
 
+            var starDisplay = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>"
+
+            if (starCount === 0) {
+              starCount = ""
+            } else if (starCount === 1) {
+              starCount = $(starDisplay);
+            } else if (starCount === 2) {
+              starCount = $(starDisplay + starDisplay);
+            } else if (starCount === 3) {
+              starCount = $(starDisplay + starDisplay + starDisplay);
+            } else if (starCount === 4) {
+              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay);
+            } else if (starCount === 5) {
+              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starDisplay);
+            }
+
             $("#school-name").html(searchResults[choice].schoolName);
             $("#address").html(searchResults[choice].address.street);
+            $("#star-count").html(starCount);
             $("#level").html(searchResults[choice].schoolLevel + " School");
             $("#state-rank").html(stateRank);
             $("#type").html(type);
             $("#avg-score").html(avgScore.toFixed(2));
             $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
             $("#ratio").html(ratio);
+
+            //additional variables to display on right side of exteneded results page
+            var contact = searchResults[choice].phone;
+
           });
         };
       });
