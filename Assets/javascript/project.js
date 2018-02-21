@@ -136,11 +136,11 @@ $("#submit-info").on("click", function (event) {
           $("#school-name").html(searchResults[choice].schoolName);
           $("#address").html(searchResults[choice].address.street);
           $("#level").html(searchResults[choice].schoolLevel + " School");
-          $("#state-rank").html("State Rank: " + stateRank);
-          $("#type").html("Type: " + type);
-          $("#avg-score").html("Average Score: " + avgScore);
-          $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-          $("#ratio").html("Student to Teacher Ratio: " + ratio);
+          $("#state-rank").html(stateRank);
+          $("#type").html(type);
+          $("#avg-score").html(avgScore.toFixed(2));
+          $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+          $("#ratio").html(ratio);
 
         });
       };
