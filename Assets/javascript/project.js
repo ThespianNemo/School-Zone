@@ -13,6 +13,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var keepZip;
 var map;
+var markerCollection = [];
 var mapCenter;
 
 // Map function to initiallize map with user's chosen zipcode area
@@ -118,6 +119,7 @@ $(window).on("load", function () {
               center: mapCenter,
               map: map
             });
+            markerCollection.push(marker);
 //hover marker with school info
 
 //create function to hide or show schoool marker based on which school is clicked
@@ -151,6 +153,18 @@ $(window).on("load", function () {
 
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
+
+            //method to show marker for choice
+            // loop over marker collection
+            for(var i=0; i < markerCollection.length; i++){
+              if (+choice === +i){
+                markerCollection[i].setMap(map);
+              } else {
+                markerCollection[i].setMap(null);
+              }
+            }
+
+
 
             $(".fourth-row").show();
             $(".fifth-row").show();
@@ -251,6 +265,9 @@ $(window).on("load", function () {
     $(".third-row").show();
     $(".fourth-row").hide();
     $(".fifth-row").hide();
+    for(var i=0; i < markerCollection.length; i++){
+        markerCollection[i].setMap(map);
+      } 
   });
 
   //enter/return key to trigger onclick function
