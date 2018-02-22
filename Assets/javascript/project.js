@@ -11,22 +11,20 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-
-$("#map").hide();
-
-// map function to initizlize map on the page
-//make map center on zipcode
+var keepZip;
 var map;
+var mapCenter;
 
-function initMap() {
+// Map function to initiallize map with user's chosen zipcode area
+function initMap(mapCenter) {
 
-  var mapCenter = { lat: 41.8781, lng: -87.6298 };
    map = new google.maps.Map(document.getElementById('map'), {
     center: mapCenter,
-    zoom: 8,
+    zoom: 10,
   });
 }
 
+$("#map").hide();
 
 $(window).on("load", function () {
 
@@ -36,6 +34,11 @@ $(window).on("load", function () {
 
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
+
+    // Save the user zipcode in Firebase
+    database.ref().set({
+      keepZip: userZip
+    });
 
     //use geo code api to get state from zip code
     var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
@@ -51,6 +54,11 @@ $(window).on("load", function () {
       // center map based on lat and lng of zipcode
       map.setCenter(response.results[0].geometry.location);
 
+      //Get latitude and longitude of zipcode area
+      mapCenter = response.results[0].geometry.location
+      
+      initMap(mapCenter)
+
       //check for State info in object
       if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
         stateResult = response.results[0].address_components[2].short_name;
@@ -60,7 +68,7 @@ $(window).on("load", function () {
         stateResult = response.results[0].address_components[4].short_name;
       };
 
-      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
+      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&perPage=50" + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
 
       // ajax function to get search results for the given zip code 
       $.ajax({
@@ -99,13 +107,16 @@ $(window).on("load", function () {
             url: geocodeUrl,
             method: "GET"
           }).then(function (response) {
+
             //get lat and long from response
             var coords = response.results[0].geometry.location;
-            console.log(coords);
-            // use lat and long to create marker on map 
+
+            console.log("coords",coords);
+
+            //Use lat and long to create school markers on the map 
             var marker = new google.maps.Marker({
               position: coords,
-              center: city,
+              center: mapCenter,
               map: map
             });
 //hover marker with school info

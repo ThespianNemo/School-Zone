@@ -6,7 +6,7 @@ html, body {
 .jumbotron {
     background-color: #4682B4;
     color: ghostwhite;
-    opacity: 0.8;
+    opacity: 0.9;
     padding-top: 15px;
     padding-bottom: 25px;
     margin-top: 30px;
@@ -85,4 +85,16 @@ html, body {
     width: 100%;
     height: 400px;
     background-color: grey;
+}
+
+.col-lg-3 {
+    text-align: right;
+}
+
+#school_info {
+    text-align: left;
+}
+
+#demographics {
+    text-align: left;
 }
