@@ -15,6 +15,7 @@ var keepZip;
 var map;
 var markerCollection = [];
 var mapCenter;
+var DEFAULT_ICON = 'http://maps.gstatic.com/mapfiles/markers2/icon_green.png';
 
 // Map function to initiallize map with user's chosen zipcode area
 function initMap(mapCenter) {
@@ -117,7 +118,8 @@ $(window).on("load", function () {
             var marker = new google.maps.Marker({
               position: coords,
               center: mapCenter,
-              map: map
+              map: map,
+              icon: DEFAULT_ICON
             });
             markerCollection.push(marker);
 //hover marker with school info
@@ -158,13 +160,12 @@ $(window).on("load", function () {
             // loop over marker collection
             for(var i=0; i < markerCollection.length; i++){
               if (+choice === +i){
-                markerCollection[i].setMap(map);
+            
+                markerCollection[i].setIcon()
               } else {
-                markerCollection[i].setMap(null);
+                markerCollection[i].setIcon(DEFAULT_ICON)
               }
             }
-
-
 
             $(".fourth-row").show();
             $(".fifth-row").show();
@@ -266,7 +267,7 @@ $(window).on("load", function () {
     $(".fourth-row").hide();
     $(".fifth-row").hide();
     for(var i=0; i < markerCollection.length; i++){
-        markerCollection[i].setMap(map);
+      markerCollection[i].setIcon(DEFAULT_ICON)
       } 
   });
 
