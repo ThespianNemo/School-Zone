@@ -63,7 +63,7 @@ $(window).on("load", function () {
         stateResult = response.results[0].address_components[4].short_name;
       };
 
-      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
+      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&perPage=50" + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
 
       // ajax function to get search results for the given zip code 
       $.ajax({
