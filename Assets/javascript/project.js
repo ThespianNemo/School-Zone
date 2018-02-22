@@ -27,13 +27,6 @@ function initMap() {
   });
 }
 
-// function initMap() {
-  // var options = {
-  //     zoom: 10,
-  //     center: coords
-  // }
-
-  // var map = new google.maps.Map(document.getElementById('map'), options)
 
 $(window).on("load", function () {
 
@@ -53,6 +46,10 @@ $(window).on("load", function () {
       method: "GET"
     }).then(function (response) {
       var stateResult = "";
+      console.log(response)
+
+      // center map based on lat and lng of zipcode
+      map.setCenter(response.results[0].geometry.location);
 
       //check for State info in object
       if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
@@ -112,6 +109,10 @@ $(window).on("load", function () {
               map: map
             });
 //hover marker with school info
+
+//create function to hide or show schoool marker based on which school is clicked
+
+// if clicked show, if not hide
 
 
           })
