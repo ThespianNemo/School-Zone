@@ -187,6 +187,7 @@ $(window).on("load", function () {
             } else {
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
               var starCount = searchResults[choice].rankHistory[0].rankStars;
+              $(".glyphicon").slice(0, starCount).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
             };
 
             if (searchResults[choice].isPrivate === true) {
@@ -204,29 +205,12 @@ $(window).on("load", function () {
             } else {
               ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
             };
-
-            var starDisplay = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>"
-            var starEmpty = "<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>"
-
-            if (starCount === 0) {
-              starCount = $(starEmpty + starEmpty + starEmpty + starEmpty + starEmpty);
-            } else if (starCount === 1) {
-              starCount = $(starDisplay + starEmpty + starEmpty + starEmpty + starEmpty);
-            } else if (starCount === 2) {
-              starCount = $(starDisplay + starDisplay + starEmpty + starEmpty + starEmpty);
-            } else if (starCount === 3) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starEmpty + starEmpty);
-            } else if (starCount === 4) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starEmpty);
-            } else if (starCount === 5) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starDisplay);
-            }
+          
             var contact = searchResults[choice].phone;
             var district = searchResults[choice].district.districtName;
 
             $("#school-name").html(searchResults[choice].schoolName);
             $("#full-address").html(fullAddress);
-            $("#star-count").html(starCount);
             $("#phone").html(contact);
             $("#district").html(district);
             $("#level").html(searchResults[choice].schoolLevel + " School");
