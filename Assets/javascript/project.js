@@ -20,7 +20,7 @@ var DEFAULT_ICON = 'http://maps.gstatic.com/mapfiles/markers2/icon_green.png';
 // Map function to initiallize map with user's chosen zipcode area
 function initMap(mapCenter) {
 
-   map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: mapCenter,
     zoom: 12,
   });
@@ -53,15 +53,15 @@ $(window).on("load", function () {
       var stateResult = "";
       console.log(response)
 
-   
+
 
       //Get latitude and longitude of zipcode area
       mapCenter = response.results[0].geometry.location
-      
+
       initMap(mapCenter)
 
-      var zipCodeBounds = new google.maps.LatLngBounds(response.results[0].geometry.bounds.southwest,response.results[0].geometry.bounds.northeast)
-    
+      var zipCodeBounds = new google.maps.LatLngBounds(response.results[0].geometry.bounds.southwest, response.results[0].geometry.bounds.northeast)
+
 
       //check for State info in object
       if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
@@ -79,7 +79,7 @@ $(window).on("load", function () {
         url: queryURL,
         method: 'GET',
       }).then(function (response) {
-          console.log(response);
+        console.log(response);
         //removes search box upon results loading
         $(".first-row").hide();
         //shows the class which default is hidden on load
@@ -103,9 +103,9 @@ $(window).on("load", function () {
           // combine address results into a readable address street+city+state+maybe zipcode
           var address = street + " " + city + " " + state;
           // console.log(address); 
-          
+
           // use google geocode api to return latitude and longitude
-          var geocodeUrl= "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
+          var geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
           // console.log (geocodeUrl);
 
           //make request to geocodeUrl
@@ -117,7 +117,7 @@ $(window).on("load", function () {
             //get lat and long from response
             var coords = response.results[0].geometry.location;
 
-            console.log("coords",coords);
+            console.log("coords", coords);
 
             //Use lat and long to create school markers on the map 
             var marker = new google.maps.Marker({
@@ -127,11 +127,11 @@ $(window).on("load", function () {
               icon: DEFAULT_ICON
             });
             markerCollection.push(marker);
-//hover marker with school info
+            //hover marker with school info
 
-//create function to hide or show schoool marker based on which school is clicked
+            //create function to hide or show schoool marker based on which school is clicked
 
-// if clicked show, if not hide
+            // if clicked show, if not hide
 
 
           })
@@ -163,9 +163,9 @@ $(window).on("load", function () {
 
             //method to show marker for choice
             // loop over marker collection
-            for(var i=0; i < markerCollection.length; i++){
-              if (+choice === +i){
-            
+            for (var i = 0; i < markerCollection.length; i++) {
+              if (+choice === +i) {
+
                 markerCollection[i].setIcon()
               } else {
                 markerCollection[i].setIcon(DEFAULT_ICON)
@@ -177,7 +177,7 @@ $(window).on("load", function () {
             $(".second-row").hide();
             $(".third-row").hide();
 
-            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " "  + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
+            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " " + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
 
             if (searchResults[choice].rankHistory === null) {
               avgScore = "N/A";
@@ -237,12 +237,12 @@ $(window).on("load", function () {
             $("#ratio").html(ratio);
 
             //additional variables to display on right side of exteneded results page
-            var contact = searchResults[choice].phone;
-            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents;
-            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents;
-            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents;
-            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents;
-            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents;
+            var contact = searchResults[choice].phone + " %";
+            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
+            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
+            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";
+            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
+            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
 
             $("#caucasian").html("<br>" + caucasian);
             $("#african-american").html(africanAm);
@@ -271,9 +271,9 @@ $(window).on("load", function () {
     $(".third-row").show();
     $(".fourth-row").hide();
     $(".fifth-row").hide();
-    for(var i=0; i < markerCollection.length; i++){
+    for (var i = 0; i < markerCollection.length; i++) {
       markerCollection[i].setIcon(DEFAULT_ICON)
-      } 
+    }
   });
 
   //enter/return key to trigger onclick function
