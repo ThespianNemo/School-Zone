@@ -10,7 +10,7 @@ html, body {
     padding-top: 15px;
     padding-bottom: 25px;
     margin-top: 30px;
-    font-family: "Audiowide", cursive;;
+    font-family: "Audiowide", cursive;
 }
 
 .first-row {
@@ -34,6 +34,14 @@ html, body {
 
 .nav-tabs {
     text-align: center;
+}
+
+#submit-info {
+    cursor: pointer;
+}
+
+tbody{
+    cursor: pointer;
 }
 
 .second-row {
@@ -65,7 +73,7 @@ html, body {
     background-color: darkkhaki;
     background-size: cover;
     padding-bottom: 25%;
-    cursor: pointer;
+    cursor: default;
 }
 
 #postal-code {
