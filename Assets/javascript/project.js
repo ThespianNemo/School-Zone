@@ -52,9 +52,6 @@ $(window).on("load", function () {
       method: "GET"
     }).then(function (response) {
       var stateResult = "";
-      console.log(response)
-
-
 
       //Get latitude and longitude of zipcode area
       mapCenter = response.results[0].geometry.location
@@ -80,7 +77,7 @@ $(window).on("load", function () {
         url: queryURL,
         method: 'GET',
       }).then(function (response) {
-        console.log(response);
+
         //removes search box upon results loading
         $(".first-row").hide();
         //shows the class which default is hidden on load
@@ -117,8 +114,6 @@ $(window).on("load", function () {
 
             //get lat and long from response
             var coords = response.results[0].geometry.location;
-
-            console.log("coords", coords);
 
             //Use lat and long to create school markers on the map 
             var marker = new google.maps.Marker({
@@ -226,10 +221,14 @@ $(window).on("load", function () {
             } else if (starCount === 5) {
               starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starDisplay);
             }
+            var contact = searchResults[choice].phone;
+            var district = searchResults[choice].district.districtName;
 
             $("#school-name").html(searchResults[choice].schoolName);
             $("#full-address").html(fullAddress);
             $("#star-count").html(starCount);
+            $("#phone").html(contact);
+            $("#district").html(district);
             $("#level").html(searchResults[choice].schoolLevel + " School");
             $("#state-rank").html(stateRank);
             $("#type").html(type);
@@ -238,7 +237,7 @@ $(window).on("load", function () {
             $("#ratio").html(ratio);
 
             //additional variables to display on right side of exteneded results page
-            var contact = searchResults[choice].phone + " %";
+
             var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
             var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
             var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";
