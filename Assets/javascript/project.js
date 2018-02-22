@@ -49,6 +49,9 @@ $(window).on("load", function () {
       method: "GET"
     }).then(function (response) {
       var stateResult = "";
+      console.log(response)
+
+   
 
       //Get latitude and longitude of zipcode area
       mapCenter = response.results[0].geometry.location
@@ -116,6 +119,11 @@ $(window).on("load", function () {
               map: map
             });
 //hover marker with school info
+
+//create function to hide or show schoool marker based on which school is clicked
+
+// if clicked show, if not hide
+
 
           })
 
