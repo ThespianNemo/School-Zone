@@ -11,7 +11,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var keepZip;
+
 var map;
 var markerCollection = [];
 var schoolNameCollection = [];
@@ -40,8 +40,9 @@ $(window).on("load", function () {
     var userZip = $("#postal-code").val().trim();
 
     // Save the user zipcode in Firebase
-    database.ref().set({
-      keepZip: userZip
+    database.ref().push({
+      userZip: userZip,
+      dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
 
     //use geo code api to get state from zip code
@@ -53,9 +54,6 @@ $(window).on("load", function () {
       method: "GET"
     }).then(function (response) {
       var stateResult = "";
-      console.log(response)
-
-
 
       //Get latitude and longitude of zipcode area
       mapCenter = response.results[0].geometry.location
@@ -81,7 +79,7 @@ $(window).on("load", function () {
         url: queryURL,
         method: 'GET',
       }).then(function (response) {
-        console.log(response);
+
         //removes search box upon results loading
         $(".first-row").hide();
         //shows the class which default is hidden on load
@@ -119,8 +117,6 @@ $(window).on("load", function () {
             //get lat and long from response
             var coords = response.results[0].geometry.location;
 
-            console.log("coords", coords);
-
             //Use lat and long to create school markers on the map 
             var marker = new google.maps.Marker({
               position: coords,
@@ -147,7 +143,7 @@ $(window).on("load", function () {
           table.addClass("result");
 
           //add school's data into the table
-          var resultsList = ("<td>" + schoolName + "<td>" + street + "</td><td>" +
+          var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
             level + "</td><td>" + stateRank + "</td>");
 
           table.append(resultsList);
@@ -190,6 +186,7 @@ $(window).on("load", function () {
             } else {
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
               var starCount = searchResults[choice].rankHistory[0].rankStars;
+              $(".glyphicon").slice(0, starCount).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
             };
 
             if (searchResults[choice].isPrivate === true) {
@@ -207,36 +204,23 @@ $(window).on("load", function () {
             } else {
               ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
             };
-
-            var starDisplay = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>"
-            var starEmpty = "<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>"
-
-            if (starCount === 0) {
-              starCount = $(starEmpty + starEmpty + starEmpty + starEmpty + starEmpty);
-            } else if (starCount === 1) {
-              starCount = $(starDisplay + starEmpty + starEmpty + starEmpty + starEmpty);
-            } else if (starCount === 2) {
-              starCount = $(starDisplay + starDisplay + starEmpty + starEmpty + starEmpty);
-            } else if (starCount === 3) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starEmpty + starEmpty);
-            } else if (starCount === 4) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starEmpty);
-            } else if (starCount === 5) {
-              starCount = $(starDisplay + starDisplay + starDisplay + starDisplay + starDisplay);
-            }
+          
+            var contact = searchResults[choice].phone;
+            var district = searchResults[choice].district.districtName;
 
             $("#school-name").html(searchResults[choice].schoolName);
             $("#full-address").html(fullAddress);
-            $("#star-count").html(starCount);
-            $("#level").html(searchResults[choice].schoolLevel + " School");
-            $("#state-rank").html(stateRank);
-            $("#type").html(type);
-            $("#avg-score").html(avgScore.toFixed(2));
-            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-            $("#ratio").html(ratio);
+            $("#phone").html(contact);
+            $("#district").html(district);
+            $("#level").html("Level: " + searchResults[choice].schoolLevel + " School");
+            $("#state-rank").html("State Rank Percentage: " + stateRank);
+            $("#type").html("Type: " + type);
+            $("#avg-score").html("Avg. Standard Score: " + avgScore.toFixed(2));
+            $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+            $("#ratio").html("Student/Teacher Ratio: " + ratio);
 
             //additional variables to display on right side of exteneded results page
-            var contact = searchResults[choice].phone + " %";
+
             var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
             var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
             var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";

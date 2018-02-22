@@ -68,55 +68,75 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-12" "text-center" id="extended-results-here">
+                        <div class="col-12" "text-center" id="extended-results-here">
                             <h4 id="school-name"></h4>
                             <h5 id="full-address"></h5>
-                            <h5 id="star-count"></h5>
+                            <h5 id="phone"></h5>
+                            <h5 id="star-count">
+                                <span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>
+                                <span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>
+                                <span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>
+                                <span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>
+                                <span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>
+                            </h5>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
-                            <ul>
-                                <li>Level: </li>
-                                <li>Type: </li>
-                                <li>State Ranking Percentage: </li>
-                                <li>Average Standard Score: </li>
-                                <li>Student Population: </li>
-                                <li>Student to Teacher Ratio: </li>
-                            </ul>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="col-xs-6" id="school_labels">
+                                <ul>
+                                    <li>Level: </li>
+                                    <li>Type: </li>
+                                    <li>State Rank %: </li>
+                                    <li>Avg. Standard Score: </li>
+                                    <li>Student Pop.: </li>
+                                    <li>Student/Teacher Ratio: </li>
+                                </ul>
+    
+                            </div>
+                            <div class="col-xs-6" id="school_info">
+                                <ul>
+                                    <li id="level"></li>
+                                    <li id="type"></li>
+                                    <li id="state-rank"></li>
+                                    <li id="avg-score"></li>
+                                    <li id="student-size"></li>
+                                    <li id="ratio"></li>
+                                </ul>
+                            </div>    
+                        </div>
 
+                        <div class="col-md-6 col-xs-12" id="Demo-labels">
+                        
+                            <div class="col-xs-6">
+                                <ul>
+                                    <li>Demographics</li>
+                                    <li>Caucasian:</li>
+                                    <li>African-American:</li>
+                                    <li>Hispanic:</li>
+                                    <li>Asian-American:</li>
+                                    <li>Indian-American:</li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-6" id="demographics">
+                                <ul>
+                                    <li id="caucasian"></li>
+                                    <li id="african-american"></li>
+                                    <li id="hispanic"></li>
+                                    <li id="asian-american"></li>
+                                    <li id="indian-american"></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-lg-3" id="school_info">
-                            <ul>
-                                <li id="level"></li>
-                                <li id="type"></li>
-                                <li id="state-rank"></li>
-                                <li id="avg-score"></li>
-                                <li id="student-size"></li>
-                                <li id="ratio"></li>
-                            </ul>
                         </div>
-                        <div class="col-lg-3">
-                            <ul>
-                                <li>Demographics</li>
-                                <li>Caucasian:</li>
-                                <li>African-American:</li>
-                                <li>Hispanic:</li>
-                                <li>Asian-American:</li>
-                                <li>Indian-American:</li>
-                            </ul>
+                        <div class="row">
+                            <div class="col-lg-12" "text-center" id="extended-results-here">
+                                <ul>
+                                    <li id="district"></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-lg-3" id="demographics">
-                            <ul>
-                                <li id="caucasian"></li>
-                                <li id="african-american"></li>
-                                <li id="hispanic"></li>
-                                <li id="asian-american"></li>
-                                <li id="indian-american"></li>
-
-                            </ul>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -139,8 +159,7 @@
 
         <script src="https://cdn.jsdeliver.net/momentjs/2.12.0/moment.min.js"></script>
         <script src="Assets/javascript/project.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3ltQRZXaHoqxDMgihF6523DnqkhA426Y" async
-            defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3ltQRZXaHoqxDMgihF6523DnqkhA426Y" async defer></script>
 </body>
 
 </html>
