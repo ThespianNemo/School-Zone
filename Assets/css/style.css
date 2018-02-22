@@ -95,20 +95,9 @@ tbody{
     background-color: grey;
 }
 
-.left-labels {
-    text-align: left;
-}
 
-.right-labels {
-    text-align: left;
-}
 
-.school-labels {
-    text-anchor: end
-}
-/*
-
-.col-lg-4 {
+#school_labels {
     text-align: right;
 }
 
@@ -119,8 +108,11 @@ tbody{
 #demographics {
     text-align: left;
 }
+#Demo-labels {
+    text-align: right;
+}
 
-*/
+
 .glyphicon {
     color: yellow;
 }
