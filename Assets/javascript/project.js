@@ -214,12 +214,12 @@ $(window).on("load", function () {
             $("#full-address").html(fullAddress);
             $("#phone").html(contact);
             $("#district").html(district);
-            $("#level").html(searchResults[choice].schoolLevel + " School");
-            $("#state-rank").html(stateRank);
-            $("#type").html(type);
-            $("#avg-score").html(avgScore.toFixed(2));
-            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-            $("#ratio").html(ratio);
+            $("#level").html("Level: " + searchResults[choice].schoolLevel + " School");
+            $("#state-rank").html("State Rank Percentage: " + stateRank);
+            $("#type").html("Type: " + type);
+            $("#avg-score").html("Avg. Standard Score: " + avgScore.toFixed(2));
+            $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+            $("#ratio").html("Student/Teacher Ratio: " + ratio);
 
             //additional variables to display on right side of exteneded results page
 
@@ -229,11 +229,12 @@ $(window).on("load", function () {
             var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
             var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
 
-            $("#caucasian").html("<br>" + caucasian);
-            $("#african-american").html(africanAm);
-            $("#hispanic").html(hispanic);
-            $("#asian-american").html(asianAm);
-            $("#indian-american").html(indianAm);
+            $("#demographics").html("Demographics: ");
+            $("#caucasian").html("Caucasian: " + caucasian);
+            $("#african-american").html("African-American: " + africanAm);
+            $("#hispanic").html("Hispanic: " + hispanic);
+            $("#asian-american").html("Asian-American: " + asianAm);
+            $("#indian-american").html("Indian-American: " + indianAm);
 
           });
         };

@@ -95,6 +95,17 @@ tbody{
     background-color: grey;
 }
 
+.left-labels {
+    text-align: left;
+}
+
+.right-labels {
+    text-align: left;
+}
+
+.school-labels {
+    text-anchor: end
+}
 /*
 
 .col-lg-4 {
