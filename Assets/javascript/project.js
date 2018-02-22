@@ -229,12 +229,11 @@ $(window).on("load", function () {
             var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
             var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
 
-            $("#demographics").html("Demographics: ");
-            $("#caucasian").html("Caucasian: " + caucasian);
-            $("#african-american").html("African-American: " + africanAm);
-            $("#hispanic").html("Hispanic: " + hispanic);
-            $("#asian-american").html("Asian-American: " + asianAm);
-            $("#indian-american").html("Indian-American: " + indianAm);
+            $("#caucasian").html("<br>" + caucasian);
+            $("#african-american").html(africanAm);
+            $("#hispanic").html(hispanic);
+            $("#asian-american").html(asianAm);
+            $("#indian-american").html(indianAm);
 
           });
         };
