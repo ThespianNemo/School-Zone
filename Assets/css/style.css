@@ -98,3 +98,7 @@ html, body {
 #demographics {
     text-align: left;
 }
+
+.glyphicon {
+    color: yellow;
+}
