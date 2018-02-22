@@ -51,8 +51,7 @@ $(window).on("load", function () {
       var stateResult = "";
       console.log(response)
 
-      // center map based on lat and lng of zipcode
-      map.setCenter(response.results[0].geometry.location);
+   
 
       //Get latitude and longitude of zipcode area
       mapCenter = response.results[0].geometry.location
