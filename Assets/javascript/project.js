@@ -12,28 +12,19 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-$("#map").hide();
-
-// map function to initizlize map on the page
-//make map center on zipcode
 var map;
+var mapCenter;
 
-function initMap() {
+// Map function to initiallize map with user's chosen zipcode area
+function initMap(mapCenter) {
 
-  var mapCenter = { lat: 41.8781, lng: -87.6298 };
    map = new google.maps.Map(document.getElementById('map'), {
     center: mapCenter,
-    zoom: 8,
+    zoom: 10,
   });
 }
 
-// function initMap() {
-  // var options = {
-  //     zoom: 10,
-  //     center: coords
-  // }
-
-  // var map = new google.maps.Map(document.getElementById('map'), options)
+$("#map").hide();
 
 $(window).on("load", function () {
 
@@ -53,6 +44,11 @@ $(window).on("load", function () {
       method: "GET"
     }).then(function (response) {
       var stateResult = "";
+
+      //Get latitude and longitude of zipcode area
+      mapCenter = response.results[0].geometry.location
+      
+      initMap(mapCenter)
 
       //check for State info in object
       if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
@@ -102,17 +98,19 @@ $(window).on("load", function () {
             url: geocodeUrl,
             method: "GET"
           }).then(function (response) {
+
             //get lat and long from response
             var coords = response.results[0].geometry.location;
-            console.log(coords);
-            // use lat and long to create marker on map 
+
+            console.log("coords",coords);
+
+            //Use lat and long to create school markers on the map 
             var marker = new google.maps.Marker({
               position: coords,
-              center: city,
+              center: mapCenter,
               map: map
             });
 //hover marker with school info
-
 
           })
 
