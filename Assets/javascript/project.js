@@ -14,6 +14,7 @@ var database = firebase.database();
 var keepZip;
 var map;
 var markerCollection = [];
+var schoolNameCollection = [];
 var mapCenter;
 var DEFAULT_ICON = 'http://maps.gstatic.com/mapfiles/markers2/icon_green.png';
 
@@ -128,14 +129,9 @@ $(window).on("load", function () {
               icon: DEFAULT_ICON
             });
             markerCollection.push(marker);
-            //hover marker with school info
-
-            //create function to hide or show schoool marker based on which school is clicked
-
-            // if clicked show, if not hide
 
 
-          })
+          });
 
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
@@ -158,11 +154,10 @@ $(window).on("load", function () {
 
           // Add table to the HTML
           $("#results-go-here > tbody").append(table);
-
+          
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
 
-            //method to show marker for choice
             // loop over marker collection
             for (var i = 0; i < markerCollection.length; i++) {
               if (+choice === +i) {
@@ -172,6 +167,9 @@ $(window).on("load", function () {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
             }
+
+            
+
 
             $(".fourth-row").show();
             $(".fifth-row").show();
