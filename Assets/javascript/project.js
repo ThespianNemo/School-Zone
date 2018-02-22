@@ -11,7 +11,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-
+var keepZip;
 var map;
 var mapCenter;
 
@@ -34,6 +34,11 @@ $(window).on("load", function () {
 
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
+
+    // Save the user zipcode in Firebase
+    database.ref().set({
+      keepZip: userZip
+    });
 
     //use geo code api to get state from zip code
     var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
