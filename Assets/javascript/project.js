@@ -30,9 +30,10 @@ $("#map").hide();
 
 $(window).on("load", function () {
 
+  $("#postal-code").val("");
+
   $("#submit-info").on("click", function (event) {
     event.preventDefault();
-
 
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
