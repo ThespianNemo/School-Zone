@@ -60,6 +60,9 @@ $(window).on("load", function () {
       
       initMap(mapCenter)
 
+      var zipCodeBounds = new google.maps.LatLngBounds(response.results[0].geometry.bounds.southwest,response.results[0].geometry.bounds.northeast)
+    
+
       //check for State info in object
       if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
         stateResult = response.results[0].address_components[2].short_name;
@@ -83,6 +86,8 @@ $(window).on("load", function () {
         $("#map").show();
         $(".second-row").show();
         $(".third-row").show();
+        map.fitBounds(zipCodeBounds);
+        map.setCenter(zipCodeBounds.getCenter());
 
         var searchResults = response.schoolList;
 
