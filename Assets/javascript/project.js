@@ -11,22 +11,23 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+var keepZip;
+var map;
+var markerCollection = [];
+var mapCenter;
+var DEFAULT_ICON = 'http://maps.gstatic.com/mapfiles/markers2/icon_green.png';
+
+// Map function to initiallize map with user's chosen zipcode area
+function initMap(mapCenter) {
+
+   map = new google.maps.Map(document.getElementById('map'), {
+    center: mapCenter,
+    zoom: 12,
+  });
+}
 
 $("#map").hide();
 
-var map;
-
-function initMap() {
-  var chicago = { lat: 41.8781, lng: -87.6298 };
-   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
-    center: chicago
-  });
-
-
-
-
-}
 $(window).on("load", function () {
 
   $("#submit-info").on("click", function (event) {
@@ -35,6 +36,11 @@ $(window).on("load", function () {
 
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
+
+    // Save the user zipcode in Firebase
+    database.ref().set({
+      keepZip: userZip
+    });
 
     //use geo code api to get state from zip code
     var getStateUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + userZip + "&key=AIzaSyCJebjxnEgjtzw7YloxNhus_LU08cAmDTA";
@@ -45,6 +51,17 @@ $(window).on("load", function () {
       method: "GET"
     }).then(function (response) {
       var stateResult = "";
+      console.log(response)
+
+   
+
+      //Get latitude and longitude of zipcode area
+      mapCenter = response.results[0].geometry.location
+      
+      initMap(mapCenter)
+
+      var zipCodeBounds = new google.maps.LatLngBounds(response.results[0].geometry.bounds.southwest,response.results[0].geometry.bounds.northeast)
+    
 
       //check for State info in object
       if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
@@ -55,7 +72,7 @@ $(window).on("load", function () {
         stateResult = response.results[0].address_components[4].short_name;
       };
 
-      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
+      var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&perPage=50" + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
 
       // ajax function to get search results for the given zip code 
       $.ajax({
@@ -69,6 +86,8 @@ $(window).on("load", function () {
         $("#map").show();
         $(".second-row").show();
         $(".third-row").show();
+        map.fitBounds(zipCodeBounds);
+        map.setCenter(zipCodeBounds.getCenter());
 
         var searchResults = response.schoolList;
 
@@ -94,22 +113,28 @@ $(window).on("load", function () {
             url: geocodeUrl,
             method: "GET"
           }).then(function (response) {
+
             //get lat and long from response
             var coords = response.results[0].geometry.location;
-            console.log(coords);
-            // use lat and long to create marker on map 
+
+            console.log("coords",coords);
+
+            //Use lat and long to create school markers on the map 
             var marker = new google.maps.Marker({
               position: coords,
-              map: map
+              center: mapCenter,
+              map: map,
+              icon: DEFAULT_ICON
             });
+            markerCollection.push(marker);
 //hover marker with school info
+
+//create function to hide or show schoool marker based on which school is clicked
+
+// if clicked show, if not hide
 
 
           })
-
-
-          
-
 
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
@@ -135,6 +160,17 @@ $(window).on("load", function () {
 
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
+
+            //method to show marker for choice
+            // loop over marker collection
+            for(var i=0; i < markerCollection.length; i++){
+              if (+choice === +i){
+            
+                markerCollection[i].setIcon()
+              } else {
+                markerCollection[i].setIcon(DEFAULT_ICON)
+              }
+            }
 
             $(".fourth-row").show();
             $(".fifth-row").show();
@@ -235,6 +271,9 @@ $(window).on("load", function () {
     $(".third-row").show();
     $(".fourth-row").hide();
     $(".fifth-row").hide();
+    for(var i=0; i < markerCollection.length; i++){
+      markerCollection[i].setIcon(DEFAULT_ICON)
+      } 
   });
 
   //enter/return key to trigger onclick function

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=audiowide" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     <link rel="stylesheet" href="Assets/css/style.css">
 </head>
 
@@ -17,7 +17,7 @@
 
     <div class="container">
         <div class="jumbotron">
-            <h2 class="text-center">schoolzone</h2>
+            <h1 class="text-center">schoolzone</h1>
             <h4 class="text-center">The future for those most important to us</h4>
         </div>
         <div class="first-row">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3" "text-right">
+                        <div class="col-lg-3">
                             <ul>
                                 <li>Level: </li>
                                 <li>Type: </li>
@@ -86,7 +86,7 @@
                             </ul>
 
                         </div>
-                        <div class="col-lg-2" "text-left">
+                        <div class="col-lg-3" id="school_info">
                             <ul>
                                 <li id="level"></li>
                                 <li id="type"></li>
@@ -96,27 +96,25 @@
                                 <li id="ratio"></li>
                             </ul>
                         </div>
-                        <div class="col-lg-2"> 
-                            <!-- <img src="assets/images/student_teacher.png" height="125px" alt="students with teacher"> -->
-                        </div>
-                        <div class="col-lg-3" "text-right">
+                        
+                        <div class="col-lg-3">
                             <ul>
-                                <li>Demographics: </li>
-                                <li>Caucasian</li>
-                                <li>African-American</li>
-                                <li>Hispanic</li>
-                                <li>Asian-American</li>
-                                <li>Indian-American</li>
+                                <li>Demographics</li>
+                                <li>Caucasian:</li>
+                                <li>African-American:</li>
+                                <li>Hispanic:</li>
+                                <li>Asian-American:</li>
+                                <li>Indian-American:</li>
                             </ul>
                         </div>
-                        <div class="col-lg-2" "text-left">
+                        <div class="col-lg-3" id="demographics">
                             <ul>
                                 <li id="caucasian"></li>
                                 <li id="african-american"></li>
                                 <li id="hispanic"></li>
                                 <li id="asian-american"></li>
                                 <li id="indian-american"></li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -131,20 +129,20 @@
             <div class="text-center">
                 <button class="btn btn-primary" id="go-back" type="submit">Back to Results</button>
             </div>
-            <br>
-
 
         </div>
-        <div class="row">
+
+        <div class="sixth -row">
+
             <div id="map"></div>
+
         </div>
-    </div>
 
 
-    <script src="https://cdn.jsdeliver.net/momentjs/2.12.0/moment.min.js"></script>
-    <script src="Assets/javascript/project.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3ltQRZXaHoqxDMgihF6523DnqkhA426Y&callback=initMap" async
-        defer></script>
+        <script src="https://cdn.jsdeliver.net/momentjs/2.12.0/moment.min.js"></script>
+        <script src="Assets/javascript/project.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3ltQRZXaHoqxDMgihF6523DnqkhA426Y" async
+            defer></script>
 </body>
 
 </html>
