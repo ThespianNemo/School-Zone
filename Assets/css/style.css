@@ -87,7 +87,9 @@ html, body {
     background-color: grey;
 }
 
-.col-lg-3 {
+/*
+
+.col-lg-4 {
     text-align: right;
 }
 
@@ -99,6 +101,7 @@ html, body {
     text-align: left;
 }
 
+*/
 .glyphicon {
     color: yellow;
 }
