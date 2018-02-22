@@ -147,7 +147,7 @@ $(window).on("load", function () {
           table.addClass("result");
 
           //add school's data into the table
-          var resultsList = ("<td>" + schoolName + "<td>" + street + "</td><td>" +
+          var resultsList = ("<td>" + schoolName + "<td>" + address + "</td><td>" +
             level + "</td><td>" + stateRank + "</td>");
 
           table.append(resultsList);
