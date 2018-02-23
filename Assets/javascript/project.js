@@ -104,6 +104,10 @@ $(window).on("load", function () {
           var level = searchResults[i].schoolLevel;
           var stateRank = "";
 
+          var myJSON = JSON.stringify(schoolName)
+          schoolNameCollection.push(myJSON);
+          console.log (myJSON)
+
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
           } else {
@@ -132,15 +136,23 @@ $(window).on("load", function () {
               position: coords,
               center: mapCenter,
               map: map,
-              icon: DEFAULT_ICON
+              icon: DEFAULT_ICON,
             });
+            function attachMyJason(marker, myJSON){
+              
+            }
+            for (var i = 0; i < schoolNameCollection.length; i++){
+              var infowindow = new google.maps.InfoWindow({
+                content: myJSON[i]
+            });
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+          }
             markerCollection.push(marker);
-
-<<<<<<< HEAD
-            });
-=======
+            
           });
->>>>>>> f4793902f344037bc139501441638faebb282af6
+
 
           //and unique ID to each item in results
           var ID = i;
@@ -158,6 +170,9 @@ $(window).on("load", function () {
           // Add table to the HTML
           $("#results-go-here > tbody").append(table);
 
+
+
+
           //click function to record which school the user selected
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
@@ -172,11 +187,6 @@ $(window).on("load", function () {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
             };
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> f4793902f344037bc139501441638faebb282af6
             $(".fourth-row").show();
             $(".fifth-row").show();
             $(".second-row").hide();
