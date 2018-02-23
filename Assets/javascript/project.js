@@ -206,7 +206,7 @@ $(window).on("load", function () {
             } else {
               ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
             };
-          
+
             var contact = searchResults[choice].phone;
             var district = searchResults[choice].district.districtName;
 
@@ -214,12 +214,13 @@ $(window).on("load", function () {
             $("#full-address").html(fullAddress);
             $("#phone").html(contact);
             $("#district").html(district);
-            $("#level").html("Level: " + searchResults[choice].schoolLevel + " School");
-            $("#state-rank").html("State Rank Percentage: " + stateRank);
+            $("#level").html(searchResults[choice].schoolLevel + " School");
+            $("#state-rank").html(stateRank);
             $("#type").html("Type: " + type);
-            $("#avg-score").html("Avg. Standard Score: " + avgScore.toFixed(2));
-            $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-            $("#ratio").html("Student/Teacher Ratio: " + ratio);
+            $("#avg-score").html(avgScore.toFixed(2));
+            console.log(avgScore);
+            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+            $("#ratio").html(ratio);
 
             //additional variables to display on right side of exteneded results page
 
