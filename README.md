@@ -1,28 +1,31 @@
-# ** schoolzone **
-## Colaborator's Section
+# schoolzone
+### Colaborators
 
 * Preston Cropp
 * Ryan Walker
 * Adam Sheets
 
-**schoolzone** ### - The Future For Those Most Important to Us!
+## schoolzone - ##The Future For Those Most Important to Us!
 
-Our user is someone who wants the best for their family when it comes to education. Whether relocating to a new area or just curiouus about educational opportunities in their current area, **schoolzone** gives them the tools they'll need to make a well informed decision about where their child can get the best education available.
+Our users are people who want the best for their family when it comes to education. Whether relocating to a new area or just curious about educational opportunities in their current area, **schoolzone gives them the tools they'll need to make a well informed decision about where their children can get the best education available.
 
-What the project does
-Why the project is useful
-How users can get started with the project
-Where users can get help with your project
-Who maintains and contributes to the project
+By simply entering a zip code, the user will be given a list of all the schools within that zip code.  Information provided in the list includes: 
 
-By entering a zip code, the user will be given the school name, address, grade level (elementary, middle, etc.), and state rank for every school in that zip code .
-
-When a specific school is clicked, the following info will be displayed:
-
+* school name
 * address
-* grade range
+* range of grades
+* state ranking
+* a map with markers showing the location of all of the schools listed
+
+Once given this information, the user can get even more specialized information by choosing a specific school from the list. When a school is chosen, the following additional information is provided:
+
 * school district
-* phone #
-* website (if available)
-* test scores
-* rating
+* school phone number
+* school type (public, private, magnet, etc.)
+* average standard scores
+* student population
+* student/teacher ratio
+* student demographics
+* a map with the chosen school's marker highlighted
+
+# schoolzone A well organized, informative one-stop tool for finding important school informtion!
