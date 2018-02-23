@@ -14,6 +14,7 @@ var database = firebase.database();
 
 var map;
 var markerCollection = [];
+var schoolNameCollection = [];
 var mapCenter;
 var DEFAULT_ICON = 'http://maps.gstatic.com/mapfiles/markers2/icon_green.png';
 
@@ -157,7 +158,6 @@ $(window).on("load", function () {
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
 
-            //method to show marker for choice
             // loop over marker collection
             for (var i = 0; i < markerCollection.length; i++) {
               if (+choice === +i) {
@@ -167,6 +167,9 @@ $(window).on("load", function () {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
             };
+
+            
+
 
             $(".fourth-row").show();
             $(".fifth-row").show();
