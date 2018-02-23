@@ -37,7 +37,7 @@ $(window).on("load", function () {
     event.preventDefault();
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
-    
+
     if (userZip.length != 5) {
       $(".modal-fade").show();
       $(".control-group").hide();
@@ -157,6 +157,7 @@ $(window).on("load", function () {
           //click function to record which school the user selected
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
+            var choiceInfo = searchResults[choice];
 
             // loop over marker collection
             for (var i = 0; i < markerCollection.length; i++) {
@@ -168,70 +169,69 @@ $(window).on("load", function () {
               }
             };
 
-            
-
-
             $(".fourth-row").show();
             $(".fifth-row").show();
             $(".second-row").hide();
             $(".third-row").hide();
 
             //additional variables to be displayed on the extended results page
-            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " " + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
+            var fullAddress = choiceInfo.address.street + " " + choiceInfo.address.city + " " + choiceInfo.address.state + " " + choiceInfo.address.zip + "-" + choiceInfo.address.zip4;
             var avgScore = "";
+            var starCount = "";
             var type = "";
-            var contact = searchResults[choice].phone;
+            var contact = choiceInfo.phone;
             var ratio = "";
             var district = "";
-            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
-            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
-            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";
-            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
-            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
+            var africanAm = choiceInfo.schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
+            var caucasian = choiceInfo.schoolYearlyDetails[0].percentofWhiteStudents + " %";
+            var hispanic = choiceInfo.schoolYearlyDetails[0].percentofHispanicStudents + " %";
+            var asianAm = choiceInfo.schoolYearlyDetails[0].percentofAsianStudents + " %";
+            var indianAm = choiceInfo.schoolYearlyDetails[0].percentofIndianStudents + " %";
 
-            if (searchResults[choice].rankHistory === null) {
+            if (choiceInfo.rankHistory === null) {
               avgScore = "N/A";
               stateRank = "N/A";
-              var starCount = "Not Ranked";
+              starCount = "Not Ranked";
+              $(".glyphicon").slice(0, 5).removeClass("glyphicon-star-empty").removeClass("glyphicon-star");
             } else {
-              avgScore = searchResults[choice].rankHistory[0].averageStandardScore.toFixed(2);
-              stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
-              var starCount = searchResults[choice].rankHistory[0].rankStars;
+              avgScore = choiceInfo.rankHistory[0].averageStandardScore.toFixed(2);
+              stateRank = choiceInfo.rankHistory[0].rankStatewidePercentage + " %";
+              starCount = choiceInfo.rankHistory[0].rankStars;
               $(".glyphicon").slice(0, starCount).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
             };
 
-            if (searchResults[choice].isPrivate === true) {
+            if (choiceInfo.isPrivate === true) {
               type = "Private";
-            } else if (searchResults[choice].isCharterSchool === "Yes") {
+            } else if (choiceInfo.isCharterSchool === "Yes") {
               type = "Charter";
-            } else if (searchResults[choice].isMagnetSchool === "Yes") {
+            } else if (choiceInfo.isMagnetSchool === "Yes") {
               type = "Magnet";
             } else {
               type = "Public";
             }
 
-            if (searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio === null) {
+            if (choiceInfo.schoolYearlyDetails[0].pupilTeacherRatio === null) {
               ratio = "N/A";
             } else {
-              ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
+              ratio = choiceInfo.schoolYearlyDetails[0].pupilTeacherRatio;
             };
 
-            if (searchResults[choice].district === undefined) {
+            if (choiceInfo.district === undefined) {
               district = "";
             } else {
-              district = searchResults[choice].district.districtName;
+              district = choiceInfo.district.districtName;
             };
 
             //add extended information variables to the page
-            $("#school-name").html(searchResults[choice].schoolName);
+            $("#school-name").html(choiceInfo.schoolName);
             $("#full-address").html(fullAddress);
             $("#phone").html(contact);
             $("#district").html(district);
-            $("#level").html(searchResults[choice].schoolLevel + " School");
+            $("#level").html(choiceInfo.schoolLevel + " School");
             $("#state-rank").html(stateRank);
             $("#type").html(type);
             $("#avg-score").html(avgScore);
-            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+            $("#student-size").html(choiceInfo.schoolYearlyDetails[0].numberOfStudents);
             $("#ratio").html(ratio);
             $("#caucasian").html("<br>" + caucasian);
             $("#african-american").html(africanAm);
@@ -266,6 +266,7 @@ $(window).on("load", function () {
     $(".third-row").show();
     $(".fourth-row").hide();
     $(".fifth-row").hide();
+    $(".glyphicon").slice(0, 5).removeClass("glyphicon-star").addClass("glyphicon-star-empty");
     for (var i = 0; i < markerCollection.length; i++) {
       markerCollection[i].setIcon(DEFAULT_ICON)
     }
