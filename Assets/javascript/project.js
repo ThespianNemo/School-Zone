@@ -100,6 +100,12 @@ $(window).on("load", function () {
           var level = searchResults[i].schoolLevel;
           var stateRank = "";
 
+          if (searchResults[i].rankHistory === null) {
+            stateRank = "N/A"
+          } else {
+            stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
+          };
+
           // combine address results into a readable address street+city+state+maybe zipcode
           var address = street + " " + city + " " + state;
           // console.log(address); 
@@ -125,21 +131,14 @@ $(window).on("load", function () {
               icon: DEFAULT_ICON
             });
             markerCollection.push(marker);
-
-
+          
           });
-
-          if (searchResults[i].rankHistory === null) {
-            stateRank = "N/A"
-          } else {
-            stateRank = searchResults[i].rankHistory[0].rankStatewidePercentage + " %";
-          }
 
           //and unique ID to each item in results
           var ID = i;
           var table = $("<tr>");
           table.attr('id', ID);
-
+          //add a class for results 
           table.addClass("result");
 
           //add school's data into the table
@@ -150,7 +149,8 @@ $(window).on("load", function () {
 
           // Add table to the HTML
           $("#results-go-here > tbody").append(table);
-          
+
+          //click function to record which school the user selected
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
 
@@ -162,7 +162,7 @@ $(window).on("load", function () {
               } else {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
-            }
+            };
 
             
 
@@ -172,12 +172,23 @@ $(window).on("load", function () {
             $(".second-row").hide();
             $(".third-row").hide();
 
+            //additional variables to be displayed on the extended results page
             var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " " + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
+            var avgScore = "";
+            var type = "";
+            var contact = searchResults[choice].phone;
+            var ratio = "";
+            var district = "";
+            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
+            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
+            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";
+            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
+            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
 
             if (searchResults[choice].rankHistory === null) {
               avgScore = "N/A";
             } else {
-              avgScore = searchResults[choice].rankHistory[0].averageStandardScore;
+              avgScore = searchResults[choice].rankHistory[0].averageStandardScore.toFixed(2);
             };
 
             if (searchResults[choice].rankHistory === null) {
@@ -204,35 +215,29 @@ $(window).on("load", function () {
             } else {
               ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
             };
-          
-            var contact = searchResults[choice].phone;
-            var district = searchResults[choice].district.districtName;
 
+            if (searchResults[choice].district === undefined) {
+              district = "";
+            } else {
+              district = searchResults[choice].district.districtName;
+            };
+
+            //add extended information variables to the page
             $("#school-name").html(searchResults[choice].schoolName);
             $("#full-address").html(fullAddress);
             $("#phone").html(contact);
             $("#district").html(district);
-            $("#level").html("Level: " + searchResults[choice].schoolLevel + " School");
-            $("#state-rank").html("State Rank Percentage: " + stateRank);
+            $("#level").html(searchResults[choice].schoolLevel + " School");
+            $("#state-rank").html(stateRank);
             $("#type").html("Type: " + type);
-            $("#avg-score").html("Avg. Standard Score: " + avgScore.toFixed(2));
-            $("#student-size").html("Student Population: " + searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-            $("#ratio").html("Student/Teacher Ratio: " + ratio);
-
-            //additional variables to display on right side of exteneded results page
-
-            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
-            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
-            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";
-            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
-            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
-
+            $("#avg-score").html(avgScore);
+            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+            $("#ratio").html(ratio);
             $("#caucasian").html("<br>" + caucasian);
             $("#african-american").html(africanAm);
             $("#hispanic").html(hispanic);
             $("#asian-american").html(asianAm);
             $("#indian-american").html(indianAm);
-
           });
         };
       });
@@ -244,11 +249,12 @@ $(window).on("load", function () {
     location.reload();
   });
 
+  //allows user to restart their search
   $("#start-over").on("click", function (event) {
     location.reload();
   });
 
-
+  //function for user to return to the full list of schools in zip code
   $("#go-back").on("click", function (event) {
     $(".second-row").show();
     $(".third-row").show();
