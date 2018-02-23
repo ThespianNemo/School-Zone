@@ -59,21 +59,29 @@ $(window).on("load", function () {
     }).then(function (response) {
       var stateResult = "";
 
-      //Get latitude and longitude of zipcode area
-      mapCenter = response.results[0].geometry.location
+      if (userZip.length === 5 && response.status === "ZERO_RESULTS") {
+        $(".modal-two").show();
+        $(".control-group").hide();
+        mapCenter = null;
+      } else {
 
-      initMap(mapCenter)
+        //Get latitude and longitude of zipcode area
+        mapCenter = response.results[0].geometry.location
 
-      var zipCodeBounds = new google.maps.LatLngBounds(response.results[0].geometry.bounds.southwest, response.results[0].geometry.bounds.northeast)
+        initMap(mapCenter)
 
+        var zipCodeBounds = new google.maps.LatLngBounds(response.results[0].geometry.bounds.southwest, response.results[0].geometry.bounds.northeast)
 
-      //check for State info in object
-      if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
-        stateResult = response.results[0].address_components[2].short_name;
-      } else if (response.results[0].address_components[3].types[0] === "administrative_area_level_1") {
-        stateResult = response.results[0].address_components[3].short_name;
-      } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
-        stateResult = response.results[0].address_components[4].short_name;
+        //check for State info in object
+        if (response.results[0].address_components[2].types[0] === "administrative_area_level_1") {
+          stateResult = response.results[0].address_components[2].short_name;
+        } else if (response.results[0].address_components[3].types[0] === "administrative_area_level_1") {
+          stateResult = response.results[0].address_components[3].short_name;
+        } else if (response.results[0].address_components[4].types[0] === "administrative_area_level_1") {
+          stateResult = response.results[0].address_components[4].short_name;
+        } else if (response.results[0].address_compenents[6].types[0] === "administrative_area_level_1") {
+          stateResult = response.results[0].address_compenents[6].short_name;
+        };
       };
 
       var queryURL = "https://api.schooldigger.com/v1.1/schools?st=" + stateResult + "&zip=" + userZip + "&perPage=50" + "&appID=3d9ff2e4&appKey=cf32743f4707e77808f66d4cbc553e80";
@@ -83,6 +91,11 @@ $(window).on("load", function () {
         url: queryURL,
         method: 'GET',
       }).then(function (response) {
+
+        if (userZip.length === 5 && response.numberOfSchools === 0) {
+          $(".modal-two").show();
+          $(".control-group").hide();
+        }
 
         //removes search box upon results loading
         $(".first-row").hide();
@@ -123,7 +136,7 @@ $(window).on("load", function () {
             url: geocodeUrl,
             method: "GET"
           }).then(function (response) {
-            
+
             //get lat and long from response
             var coords = response.results[0].geometry.location;
 
@@ -136,21 +149,18 @@ $(window).on("load", function () {
             });
 
             markerCollection.push(marker);
-            function attachMyJason(marker, myJSON){
-              
+            function attachMyJason(marker, myJSON) {
+
             }
-            for (var i = 0; i < schoolNameCollection.length; i++){
+            for (var i = 0; i < schoolNameCollection.length; i++) {
               var infowindow = new google.maps.InfoWindow({
                 content: myJSON[i]
-            });
-            marker.addListener('click', function() {
-              infowindow.open(map, marker);
-            });
-          }
-            
-            
+              });
+              marker.addListener('click', function () {
+                infowindow.open(map, marker);
+              });
+            }
           });
-
 
           //and unique ID to each item in results
           var ID = i;
@@ -167,9 +177,6 @@ $(window).on("load", function () {
 
           // Add table to the HTML
           $("#results-go-here > tbody").append(table);
-
-
-
 
           //click function to record which school the user selected
           $(".result").on("click", function () {
@@ -259,12 +266,7 @@ $(window).on("load", function () {
       });
     });
   });
-// This example displays a marker at the center of Australia.
-// When the user clicks the marker, an info window opens.
-
-
-  
-
+ 
   //event handler to reload page for user to start search over
   $("#restart-search").on("click", function (event) {
     location.reload();
@@ -280,6 +282,13 @@ $(window).on("load", function () {
     $("#postal-code").val("");
     $(".control-group").show();
   });
+
+  $("#redo").on("click", function (event) {
+    $(".modal-two").hide();
+    $("#postal-code").val("");
+    $(".control-group").show();
+  });
+
 
   //function for user to return to the full list of schools in zip code
   $("#go-back").on("click", function (event) {
