@@ -1,6 +1,6 @@
 # schoolzone  - The Future For Those Most Important to Us!
 
-schoolzone is for people who want the best for their family when it comes to education. Whether relocating to a new area or just curious about educational opportunities in their current area, ** schoolzone gives them the tools they'll need to make a well informed decision about where their children can get the best education available.
+**schoolzone** is for people who want the best for their family when it comes to education. Whether relocating to a new area or just curious about educational opportunities in their current area, **schoolzone** gives them the tools they'll need to make a well informed decision about where their children can get the best education available.
 
 By simply entering a zip code . . .
 
