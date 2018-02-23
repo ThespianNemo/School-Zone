@@ -4,7 +4,7 @@
 
 By simply entering a zip code . . .
 
-[insert image]
+[homepage]: https://github.com/ThespianNemo/School-Zone/blob/master/Assets/images/park.jpeg
 
 . . . the user will be given a list of all the schools within that zip code.  Information provided in the list includes: 
 
