@@ -14,6 +14,7 @@ var database = firebase.database();
 
 var map;
 var markerCollection = [];
+var schoolNameCollection = [];
 var mapCenter;
 var DEFAULT_ICON = 'http://maps.gstatic.com/mapfiles/markers2/icon_green.png';
 
@@ -34,9 +35,13 @@ $(window).on("load", function () {
 
   $("#submit-info").on("click", function (event) {
     event.preventDefault();
-
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
+
+    if (userZip.length != 5) {
+      $(".modal-fade").show();
+      $(".control-group").hide();
+    }
 
     // Save the user zipcode in Firebase
     database.ref().push({
@@ -99,6 +104,13 @@ $(window).on("load", function () {
           var level = searchResults[i].schoolLevel;
           var stateRank = "";
 
+<<<<<<< HEAD
+=======
+          var myJSON = JSON.stringify(schoolName)
+          schoolNameCollection.push(myJSON);
+          console.log (myJSON)
+
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
           } else {
@@ -118,7 +130,7 @@ $(window).on("load", function () {
             url: geocodeUrl,
             method: "GET"
           }).then(function (response) {
-
+            
             //get lat and long from response
             var coords = response.results[0].geometry.location;
 
@@ -127,11 +139,28 @@ $(window).on("load", function () {
               position: coords,
               center: mapCenter,
               map: map,
-              icon: DEFAULT_ICON
+              icon: DEFAULT_ICON,
             });
+            function attachMyJason(marker, myJSON){
+              
+            }
+            for (var i = 0; i < schoolNameCollection.length; i++){
+              var infowindow = new google.maps.InfoWindow({
+                content: myJSON[i]
+            });
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+          }
             markerCollection.push(marker);
+<<<<<<< HEAD
           
           });
+=======
+            
+          });
+
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
 
           //and unique ID to each item in results
           var ID = i;
@@ -149,12 +178,22 @@ $(window).on("load", function () {
           // Add table to the HTML
           $("#results-go-here > tbody").append(table);
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
           //click function to record which school the user selected
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
+            var choiceInfo = searchResults[choice];
 
+<<<<<<< HEAD
 
             //method to show marker for choice
+=======
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
             // loop over marker collection
             for (var i = 0; i < markerCollection.length; i++) {
               if (+choice === +i) {
@@ -164,13 +203,17 @@ $(window).on("load", function () {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
             };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
             $(".fourth-row").show();
             $(".fifth-row").show();
             $(".second-row").hide();
             $(".third-row").hide();
 
             //additional variables to be displayed on the extended results page
+<<<<<<< HEAD
             var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " " + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
             var avgScore = "";
             var type = "";
@@ -191,30 +234,56 @@ $(window).on("load", function () {
             };
 
             if (searchResults[choice].rankHistory === null) {
+=======
+            var fullAddress = choiceInfo.address.street + " " + choiceInfo.address.city + " " + choiceInfo.address.state + " " + choiceInfo.address.zip + "-" + choiceInfo.address.zip4;
+            var avgScore = "";
+            var starCount = "";
+            var type = "";
+            var contact = choiceInfo.phone;
+            var ratio = "";
+            var district = "";
+            var africanAm = choiceInfo.schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
+            var caucasian = choiceInfo.schoolYearlyDetails[0].percentofWhiteStudents + " %";
+            var hispanic = choiceInfo.schoolYearlyDetails[0].percentofHispanicStudents + " %";
+            var asianAm = choiceInfo.schoolYearlyDetails[0].percentofAsianStudents + " %";
+            var indianAm = choiceInfo.schoolYearlyDetails[0].percentofIndianStudents + " %";
+
+            if (choiceInfo.rankHistory === null) {
+              avgScore = "N/A";
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
               stateRank = "N/A";
-              var starCount = "Not Ranked";
+              starCount = "Not Ranked";
+              $(".glyphicon").slice(0, 5).removeClass("glyphicon-star-empty").removeClass("glyphicon-star");
             } else {
-              stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
-              var starCount = searchResults[choice].rankHistory[0].rankStars;
+              avgScore = choiceInfo.rankHistory[0].averageStandardScore.toFixed(2);
+              stateRank = choiceInfo.rankHistory[0].rankStatewidePercentage + " %";
+              starCount = choiceInfo.rankHistory[0].rankStars;
               $(".glyphicon").slice(0, starCount).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
             };
 
-            if (searchResults[choice].isPrivate === true) {
+            if (choiceInfo.isPrivate === true) {
               type = "Private";
-            } else if (searchResults[choice].isCharterSchool === "Yes") {
+            } else if (choiceInfo.isCharterSchool === "Yes") {
               type = "Charter";
-            } else if (searchResults[choice].isMagnetSchool === "Yes") {
+            } else if (choiceInfo.isMagnetSchool === "Yes") {
               type = "Magnet";
             } else {
               type = "Public";
             }
 
-            if (searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio === null) {
+            if (choiceInfo.schoolYearlyDetails[0].pupilTeacherRatio === null) {
               ratio = "N/A";
             } else {
-              ratio = searchResults[choice].schoolYearlyDetails[0].pupilTeacherRatio;
+              ratio = choiceInfo.schoolYearlyDetails[0].pupilTeacherRatio;
             };
 
+            if (choiceInfo.district === undefined) {
+              district = "";
+            } else {
+              district = choiceInfo.district.districtName;
+            };
+
+<<<<<<< HEAD
             if (searchResults[choice].district === undefined) {
               district = "";
             } else {
@@ -230,6 +299,18 @@ $(window).on("load", function () {
             $("#type").html(type);
             $("#avg-score").html(avgScore);
             $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
+=======
+            //add extended information variables to the page
+            $("#school-name").html(choiceInfo.schoolName);
+            $("#full-address").html(fullAddress);
+            $("#phone").html(contact);
+            $("#district").html(district);
+            $("#level").html(choiceInfo.schoolLevel + " School");
+            $("#state-rank").html(stateRank);
+            $("#type").html(type);
+            $("#avg-score").html(avgScore);
+            $("#student-size").html(choiceInfo.schoolYearlyDetails[0].numberOfStudents);
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
             $("#ratio").html(ratio);
             $("#caucasian").html("<br>" + caucasian);
             $("#african-american").html(africanAm);
@@ -241,6 +322,11 @@ $(window).on("load", function () {
       });
     });
   });
+// This example displays a marker at the center of Australia.
+// When the user clicks the marker, an info window opens.
+
+
+  
 
   //event handler to reload page for user to start search over
   $("#restart-search").on("click", function (event) {
@@ -252,12 +338,22 @@ $(window).on("load", function () {
     location.reload();
   });
 
+<<<<<<< HEAD
+=======
+  $("#try-again").on("click", function (event) {
+    $(".modal-fade").hide();
+    $("#postal-code").val("");
+    $(".control-group").show();
+  });
+
+>>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
   //function for user to return to the full list of schools in zip code
   $("#go-back").on("click", function (event) {
     $(".second-row").show();
     $(".third-row").show();
     $(".fourth-row").hide();
     $(".fifth-row").hide();
+    $(".glyphicon").slice(0, 5).removeClass("glyphicon-star").addClass("glyphicon-star-empty");
     for (var i = 0; i < markerCollection.length; i++) {
       markerCollection[i].setIcon(DEFAULT_ICON)
     }
