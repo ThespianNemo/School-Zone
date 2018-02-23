@@ -104,13 +104,6 @@ $(window).on("load", function () {
           var level = searchResults[i].schoolLevel;
           var stateRank = "";
 
-<<<<<<< HEAD
-=======
-          var myJSON = JSON.stringify(schoolName)
-          schoolNameCollection.push(myJSON);
-          console.log (myJSON)
-
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
           if (searchResults[i].rankHistory === null) {
             stateRank = "N/A"
           } else {
@@ -153,14 +146,9 @@ $(window).on("load", function () {
             });
           }
             markerCollection.push(marker);
-<<<<<<< HEAD
-          
-          });
-=======
             
           });
 
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
 
           //and unique ID to each item in results
           var ID = i;
@@ -178,22 +166,14 @@ $(window).on("load", function () {
           // Add table to the HTML
           $("#results-go-here > tbody").append(table);
 
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
           //click function to record which school the user selected
           $(".result").on("click", function () {
             var choice = ($(this).attr("id"));
             var choiceInfo = searchResults[choice];
 
-<<<<<<< HEAD
-
-            //method to show marker for choice
-=======
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
             // loop over marker collection
             for (var i = 0; i < markerCollection.length; i++) {
               if (+choice === +i) {
@@ -203,38 +183,12 @@ $(window).on("load", function () {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
             };
-<<<<<<< HEAD
-
-=======
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
             $(".fourth-row").show();
             $(".fifth-row").show();
             $(".second-row").hide();
             $(".third-row").hide();
 
             //additional variables to be displayed on the extended results page
-<<<<<<< HEAD
-            var fullAddress = searchResults[choice].address.street + " " + searchResults[choice].address.city + " " + searchResults[choice].address.state + " " + searchResults[choice].address.zip + "-" + searchResults[choice].address.zip4;
-            var avgScore = "";
-            var type = "";
-            var contact = searchResults[choice].phone;
-            var ratio = "";
-            var district = "";
-            var africanAm = searchResults[choice].schoolYearlyDetails[0].percentofAfricanAmericanStudents + " %";
-            var caucasian = searchResults[choice].schoolYearlyDetails[0].percentofWhiteStudents + " %";
-            var hispanic = searchResults[choice].schoolYearlyDetails[0].percentofHispanicStudents + " %";
-            var asianAm = searchResults[choice].schoolYearlyDetails[0].percentofAsianStudents + " %";
-            var indianAm = searchResults[choice].schoolYearlyDetails[0].percentofIndianStudents + " %";
-
-
-            if (searchResults[choice].rankHistory === null) {
-              avgScore = "N/A";
-            } else {
-              avgScore = searchResults[choice].rankHistory[0].averageStandardScore.toFixed(2);
-            };
-
-            if (searchResults[choice].rankHistory === null) {
-=======
             var fullAddress = choiceInfo.address.street + " " + choiceInfo.address.city + " " + choiceInfo.address.state + " " + choiceInfo.address.zip + "-" + choiceInfo.address.zip4;
             var avgScore = "";
             var starCount = "";
@@ -250,7 +204,6 @@ $(window).on("load", function () {
 
             if (choiceInfo.rankHistory === null) {
               avgScore = "N/A";
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
               stateRank = "N/A";
               starCount = "Not Ranked";
               $(".glyphicon").slice(0, 5).removeClass("glyphicon-star-empty").removeClass("glyphicon-star");
@@ -283,23 +236,6 @@ $(window).on("load", function () {
               district = choiceInfo.district.districtName;
             };
 
-<<<<<<< HEAD
-            if (searchResults[choice].district === undefined) {
-              district = "";
-            } else {
-              district = searchResults[choice].district.districtName;
-            };
-            //add extended information variables to the page
-            $("#school-name").html(searchResults[choice].schoolName);
-            $("#full-address").html(fullAddress);
-            $("#phone").html(contact);
-            $("#district").html(district);
-            $("#level").html(searchResults[choice].schoolLevel + " School");
-            $("#state-rank").html(stateRank);
-            $("#type").html(type);
-            $("#avg-score").html(avgScore);
-            $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
-=======
             //add extended information variables to the page
             $("#school-name").html(choiceInfo.schoolName);
             $("#full-address").html(fullAddress);
@@ -310,7 +246,6 @@ $(window).on("load", function () {
             $("#type").html(type);
             $("#avg-score").html(avgScore);
             $("#student-size").html(choiceInfo.schoolYearlyDetails[0].numberOfStudents);
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
             $("#ratio").html(ratio);
             $("#caucasian").html("<br>" + caucasian);
             $("#african-american").html(africanAm);
@@ -338,15 +273,12 @@ $(window).on("load", function () {
     location.reload();
   });
 
-<<<<<<< HEAD
-=======
   $("#try-again").on("click", function (event) {
     $(".modal-fade").hide();
     $("#postal-code").val("");
     $(".control-group").show();
   });
 
->>>>>>> 9ab41687b5adbe8b6546ec0a9f61a11aa5a07811
   //function for user to return to the full list of schools in zip code
   $("#go-back").on("click", function (event) {
     $(".second-row").show();
