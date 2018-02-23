@@ -34,9 +34,13 @@ $(window).on("load", function () {
 
   $("#submit-info").on("click", function (event) {
     event.preventDefault();
-
     //grabs zip code user entered
     var userZip = $("#postal-code").val().trim();
+    
+    if (userZip.length != 5) {
+      $(".modal-fade").show();
+      $(".control-group").hide();
+    }
 
     // Save the user zipcode in Firebase
     database.ref().push({
@@ -130,7 +134,7 @@ $(window).on("load", function () {
               icon: DEFAULT_ICON
             });
             markerCollection.push(marker);
-          
+
           });
 
           //and unique ID to each item in results
@@ -184,14 +188,10 @@ $(window).on("load", function () {
 
             if (searchResults[choice].rankHistory === null) {
               avgScore = "N/A";
-            } else {
-              avgScore = searchResults[choice].rankHistory[0].averageStandardScore.toFixed(2);
-            };
-
-            if (searchResults[choice].rankHistory === null) {
               stateRank = "N/A";
               var starCount = "Not Ranked";
             } else {
+              avgScore = searchResults[choice].rankHistory[0].averageStandardScore.toFixed(2);
               stateRank = searchResults[choice].rankHistory[0].rankStatewidePercentage + " %";
               var starCount = searchResults[choice].rankHistory[0].rankStars;
               $(".glyphicon").slice(0, starCount).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
@@ -226,7 +226,7 @@ $(window).on("load", function () {
             $("#district").html(district);
             $("#level").html(searchResults[choice].schoolLevel + " School");
             $("#state-rank").html(stateRank);
-            $("#type").html("Type: " + type);
+            $("#type").html(type);
             $("#avg-score").html(avgScore);
             $("#student-size").html(searchResults[choice].schoolYearlyDetails[0].numberOfStudents);
             $("#ratio").html(ratio);
@@ -249,6 +249,12 @@ $(window).on("load", function () {
   //allows user to restart their search
   $("#start-over").on("click", function (event) {
     location.reload();
+  });
+
+  $("#try-again").on("click", function (event) {
+    $(".modal-fade").hide();
+    $("#postal-code").val("");
+    $(".control-group").show();
   });
 
   //function for user to return to the full list of schools in zip code
