@@ -134,6 +134,8 @@ $(window).on("load", function () {
               map: map,
               icon: DEFAULT_ICON,
             });
+
+            markerCollection.push(marker);
             function attachMyJason(marker, myJSON){
               
             }
@@ -145,7 +147,7 @@ $(window).on("load", function () {
               infowindow.open(map, marker);
             });
           }
-            markerCollection.push(marker);
+            
             
           });
 
