@@ -5,7 +5,7 @@
 * Ryan Walker
 * Adam Sheets
 
-## schoolzone - ##The Future For Those Most Important to Us!
+## schoolzone - ## The Future For Those Most Important to Us!
 
 Our users are people who want the best for their family when it comes to education. Whether relocating to a new area or just curious about educational opportunities in their current area, **schoolzone gives them the tools they'll need to make a well informed decision about where their children can get the best education available.
 
@@ -28,4 +28,4 @@ Once given this information, the user can get even more specialized information 
 * student demographics
 * a map with the chosen school's marker highlighted
 
-# schoolzone A well organized, informative one-stop tool for finding important school informtion!
+## schoolzone - A well organized, informative one-stop tool for finding important school informtion!
