@@ -119,7 +119,7 @@ $(window).on("load", function () {
             url: geocodeUrl,
             method: "GET"
           }).then(function (response) {
-
+            
             //get lat and long from response
             var coords = response.results[0].geometry.location;
 
@@ -131,8 +131,8 @@ $(window).on("load", function () {
               icon: DEFAULT_ICON
             });
             markerCollection.push(marker);
-          
-          });
+
+            });
 
           //and unique ID to each item in results
           var ID = i;
@@ -163,10 +163,7 @@ $(window).on("load", function () {
                 markerCollection[i].setIcon(DEFAULT_ICON)
               }
             };
-
             
-
-
             $(".fourth-row").show();
             $(".fifth-row").show();
             $(".second-row").hide();
@@ -243,6 +240,11 @@ $(window).on("load", function () {
       });
     });
   });
+// This example displays a marker at the center of Australia.
+// When the user clicks the marker, an info window opens.
+
+
+  
 
   //event handler to reload page for user to start search over
   $("#restart-search").on("click", function (event) {
